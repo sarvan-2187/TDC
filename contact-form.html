@@ -6,8 +6,6 @@
   <title>Contact Us - TDC</title>
   <link rel="icon" href="Assets/Org.png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
   <link href="https://cdnjs.cloudflare.com/ajax/libs/poppins/4.0.1/poppins.min.css" rel="stylesheet">
   <style>
     :root {
@@ -42,8 +40,6 @@
       align-items: center;
       justify-content: center;
     }
-
-
     
     body::before {
       content: "";
@@ -245,6 +241,28 @@
       transform: rotate(-15deg);
     }
     
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      border-radius: var(--border-radius);
+      background-color: #4CAF50;
+      color: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transform: translateX(120%);
+      transition: transform 0.3s ease-out;
+      z-index: 1000;
+    }
+    
+    .notification.show {
+      transform: translateX(0);
+    }
+    
+    .notification.error {
+      background-color: #f44336;
+    }
+    
     @media (max-width: 768px) {
       .section {
         padding: 40px 0;
@@ -306,10 +324,12 @@
           <label class="label" for="subject">What's brewing?</label>
           <div class="control">
             <div class="select">
-              <select name="subject">
+              <select name="subject" required>
                 <option value="">Select a subject</option>
                 <option value="Product Enquiry">Coffee Enquiry</option>
                 <option value="Review">Leave a Review</option>
+                <option value="Business">Business Inquiry</option>
+                <option value="Other">Other</option>
               </select>
             </div>
           </div>
@@ -327,6 +347,9 @@
           </div>
         </div>
         
+        <!-- Hidden field for status -->
+        <input type="hidden" name="status" value="new">
+        
         <div class="field">
           <div class="control">
             <button class="button is-primary" type="submit">Send Query</button>
@@ -336,36 +359,79 @@
     </div>
   </section>
   
+  <div id="notification" class="notification">Message sent successfully!</div>
+  
   <script src="https://unpkg.com/@supabase/supabase-js"></script>
   <script>
-    const { createClient } = supabase
-    supabase = createClient("https://biymjgwlkvhdvdnotmrj.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpeW1qZ3dsa3ZoZHZkbm90bXJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ1MzAyOTAsImV4cCI6MjA2MDEwNjI5MH0.OyIcTLYL8eGTp-hXzrfMhTpLrFDQu0yx64dy4gqueKw")
-    
-    const form = document.querySelector('#contact-form')
-    form.addEventListener('submit', async (event) => {
-      event.preventDefault()
+    document.addEventListener('DOMContentLoaded', () => {
+      const { createClient } = supabase;
+      const supabaseClient = createClient(
+        "https://biymjgwlkvhdvdnotmrj.supabase.co", 
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpeW1qZ3dsa3ZoZHZkbm90bXJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ1MzAyOTAsImV4cCI6MjA2MDEwNjI5MH0.OyIcTLYL8eGTp-hXzrfMhTpLrFDQu0yx64dy4gqueKw"
+      );
       
-      const formInputs = form.querySelectorAll('input, select, textarea')
+      const form = document.querySelector('#contact-form');
+      const notification = document.getElementById('notification');
       
-      let submision = {}
-      
-      formInputs.forEach(element => {
-        const { value, name } = element
-        if (value) {
-          submision[name] = value
-        }
-      })
-      
-      const { error } = await supabase.from('contact_entries').insert([submision], { returning: 'minimal'})
-      
-      if (error) {
-        alert('There was an error brewing your message. Please try again.')
-      } else {
-        window.location="submitted.html"
+      // Function to show notification
+      function showNotification(message, isError = false) {
+        notification.textContent = message;
+        notification.className = `notification ${isError ? 'error' : ''}`;
+        notification.classList.add('show');
+        
+        setTimeout(() => {
+          notification.classList.remove('show');
+        }, 3000);
       }
       
-      formInputs.forEach(element => element.value = '')
-    })
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        
+        const formInputs = form.querySelectorAll('input, select, textarea');
+        
+        let submission = {};
+        
+        formInputs.forEach(element => {
+          const { value, name } = element;
+          if (value) {
+            submission[name] = value;
+          }
+        });
+        
+        // Ensure status is included
+        if (!submission.status) {
+          submission.status = 'new';
+        }
+        
+        // Add timestamp for when entry was created
+        submission.created_at = new Date().toISOString();
+        
+        // Initialize empty replies array
+        submission.replies = [];
+        
+        try {
+          const { error } = await supabaseClient
+            .from('contact_entries')
+            .insert([submission], { returning: 'minimal' });
+          
+          if (error) throw error;
+          
+          showNotification('Your message has been successfully sent!');
+          
+          // Reset form
+          form.reset();
+          
+          // Redirect after a short delay
+          setTimeout(() => {
+            window.location.href = "submitted.html";
+          }, 1500);
+          
+        } catch (error) {
+          console.error('Submission error:', error);
+          showNotification('There was an error brewing your message. Please try again.', true);
+        }
+      });
+    });
   </script>
 </body>
 </html>
