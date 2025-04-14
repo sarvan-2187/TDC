@@ -60,7 +60,7 @@ header h1 span{
 .item-0 {
     grid-column: 1 / span 3;
     grid-row: 1 / span 3;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("Assets/Banner-img\ 1.png" ) no-repeat center center/cover;
+    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("Assets/redesigned-version.png" ) no-repeat center center/cover;
     display: flex;
     align-items: center;
     justify-content: center;    
