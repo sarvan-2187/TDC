@@ -1,0 +1,785 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Order Tracking - TDC</title>
+  <link rel="icon" href="Assets/Org.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/poppins/4.0.1/poppins.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --dark-brown: #3c2a21;
+      --medium-brown: #6b4f4f;
+      --light-brown: #d5bdaf;
+      --cream: #f4f1ea;
+      --text-dark: #2c1810;
+      --text-light: #f5f5f5;
+      --accent-gold: #cda349;
+      --border-radius: 6px;
+      --success-color: #4CAF50;
+      --pending-color: #FFC107;
+      --inactive-color: #d0d0d0;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      background-color: var(--cream);
+      color: var(--text-dark);
+      line-height: 1.6;
+      background-image: url("Assets/order-background.jpg");
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(40, 40, 40, 0.85);
+      z-index: -1;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .section {
+      padding: 60px 0;
+    }
+    
+    .coffee-card {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(60, 42, 33, 0.15);
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--light-brown);
+      max-width: 100%;
+      word-wrap: break-word;
+    }
+
+    @media (max-width:768px){
+      .coffee-card{
+        border-radius: none;
+      }
+    }
+    
+    .coffee-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: linear-gradient(90deg, var(--dark-brown), var(--medium-brown), var(--light-brown));
+    }
+    
+    .title {
+      color: var(--dark-brown);
+      margin-bottom: 30px;
+      font-size: 2.3rem;
+      text-align: center;
+      font-weight: 600;
+      position: relative;
+      padding-bottom: 15px;
+      letter-spacing: -0.5px;
+    }
+    
+    .title::after {
+      content: "☕";
+      font-size: 1.5rem;
+      display: block;
+      text-align: center;
+      margin-top: 10px;
+      color: var(--accent-gold);
+    }
+    
+    .back-button {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      color: var(--medium-brown);
+      text-decoration: none;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    
+    .back-button i {
+      margin-right: 5px;
+    }
+    
+    .back-button:hover {
+      color: var(--dark-brown);
+    }
+    
+    .tracking-form {
+      margin-bottom: 30px;
+    }
+    
+    .tracking-input {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+    
+    .input {
+      flex: 1;
+      padding: 14px 16px;
+      border: 2px solid var(--light-brown);
+      border-radius: var(--border-radius);
+      background-color: rgba(255, 255, 255, 0.9);
+      font-size: 15px;
+      transition: all 0.3s ease;
+      color: var(--text-dark);
+    }
+    
+    .input:focus {
+      outline: none;
+      border-color: var(--medium-brown);
+      box-shadow: 0 0 0 3px rgba(107, 79, 79, 0.2);
+      background-color: white;
+    }
+    
+    .button {
+      display: inline-block;
+      background-color: var(--dark-brown);
+      color: var(--text-light);
+      border: none;
+      padding: 14px 28px;
+      border-radius: var(--border-radius);
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(60, 42, 33, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .button::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .button:hover {
+      background-color: var(--medium-brown);
+      transform: translateY(-2px);
+    }
+    
+    .button:hover::after {
+      opacity: 1;
+    }
+    
+    .button:active {
+      transform: translateY(0);
+    }
+    
+    .order-details {
+      display: none;
+      margin-top: 20px;
+    }
+    
+    .order-info {
+      background-color: var(--cream);
+      padding: 20px;
+      border-radius: var(--border-radius);
+      margin-bottom: 30px;
+      border: 1px solid var(--light-brown);
+      overflow-wrap: break-word;
+      word-break: break-word;
+    }
+    
+    .order-info-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 10px;
+      padding-bottom: 10px;
+      border-bottom: 1px dashed var(--light-brown);
+    }
+    
+    .order-info-row:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
+    
+    .order-info-label {
+      font-weight: 500;
+      color: var(--medium-brown);
+      padding-right: 10px;
+      white-space: nowrap;
+    }
+    
+    .order-info-value {
+      font-weight: 600;
+      color: var(--text-dark);
+      text-align: right;
+      word-break: break-word;
+    }
+    
+    .tracking-progress {
+      margin-top: 30px;
+    }
+    
+    .progress-title {
+      font-size: 1.4rem;
+      color: var(--dark-brown);
+      margin-bottom: 20px;
+      text-align: center;
+      font-weight: 500;
+    }
+    
+    .progress-steps {
+      position: relative;
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 60px;
+    }
+    
+    .progress-steps::before {
+      content: "";
+      position: absolute;
+      top: 15px;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background-color: var(--inactive-color);
+      z-index: 0;
+    }
+    
+    .progress-step {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 30px;
+    }
+    
+    .step-indicator {
+      width: 30px;
+      height: 30px;
+      background-color: var(--inactive-color);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 14px;
+      margin-bottom: 8px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    
+    
+    .progress-step.active .step-indicator {
+      background-color: var(--success-color);
+      box-shadow: 0 0 0 4px rgba(76, 175, 80, 0.2);
+    }
+    
+    .progress-step.active {
+      color: var(--success-color);
+      font-weight: 600;
+    }
+    
+    .progress-step.pending .step-indicator {
+      background-color: var(--pending-color);
+      box-shadow: 0 0 0 4px rgba(255, 193, 7, 0.2);
+    }
+    
+    .progress-step.pending .step-label {
+      color: var(--pending-color);
+      font-weight: 600;
+    }
+    
+    .progress-line {
+      position: absolute;
+      top: 15px;
+      left: 0;
+      height: 4px;
+      background-color: var(--success-color);
+      z-index: 0;
+      transition: width 0.5s ease;
+    }
+    
+    .error-message {
+      color: #F44336;
+      background-color: rgba(244, 67, 54, 0.1);
+      padding: 15px;
+      border-radius: var(--border-radius);
+      margin-top: 20px;
+      border: 1px solid #F44336;
+      display: none;
+    }
+    
+    .loading {
+      display: none;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    .loading i {
+      color: var(--medium-brown);
+      font-size: 2rem;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    /* Enhanced Responsive Styles */
+    /* Large devices (desktops) */
+    @media (max-width: 1200px) {
+      .container {
+        max-width: 90%;
+      }
+    }
+    
+    /* Medium devices (tablets) */
+    @media (max-width: 992px) {
+      .section {
+        padding: 50px 0;
+      }
+      
+      .title {
+        font-size: 2.1rem;
+      }
+      
+      .coffee-card {
+        padding: 35px 25px;
+      }
+    }
+    
+    /* Small devices (landscape phones) */
+    @media (max-width: 768px) {
+      .section {
+        padding: 40px 0;
+      }
+      
+      .title {
+        font-size: 2rem;
+        margin-top: 25px;
+      }
+      
+      .coffee-card {
+        padding: 30px 20px;
+      }
+      
+      .progress-steps {
+        margin-bottom: 80px;
+      }
+      
+      .step-label {
+        font-size: 10px;
+        width: 70px;
+        transform: translateX(-20px);
+      }
+      
+      .order-info-row {
+        flex-direction: column;
+        gap: 5px;
+      }
+      
+      .order-info-value {
+        text-align: left;
+      }
+    }
+    
+    /* Extra small devices (portrait phones) */
+    @media (max-width: 576px) {
+      .section {
+        padding: 30px 0;
+      }
+      
+      .title {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        margin-top: 25px;
+      }
+      
+      .coffee-card {
+        padding: 25px 15px;
+        border-radius: 8px;
+      }
+      
+      .tracking-input {
+        flex-direction: column;
+        gap: 15px;
+      }
+      
+      .button {
+        width: 100%;
+        padding: 12px 20px;
+      }
+      
+      .progress-title {
+        font-size: 1.2rem;
+      }
+      
+      .progress-steps {
+        margin-bottom: 100px;
+      }
+      
+      .step-indicator {
+        width: 25px;
+        height: 25px;
+        font-size: 12px;
+      }
+      
+      .step-label {
+        font-size: 9px;
+        width: 60px;
+        transform: translateX(-18px);
+        top: 35px;
+      }
+      
+      .order-info {
+        padding: 15px;
+      }
+      
+      .order-info-label, .order-info-value {
+        font-size: 14px;
+      }
+      
+      .back-button {
+        position: relative;
+        top: 0;
+        left: 0;
+        display: block;
+        margin-bottom: 15px;
+        text-align: center;
+      }
+    }
+    
+    /* Very small devices */
+    @media (max-width: 400px) {
+      .title {
+        font-size: 1.6rem;
+      }
+      
+      .progress-steps {
+        margin-bottom: 120px;
+      }
+      
+      .step-indicator {
+        width: 22px;
+        height: 22px;
+        font-size: 10px;
+      }
+      
+      .step-label {
+        font-size: 8px;
+        width: 50px;
+        transform: translateX(-14px);
+        top: 30px;
+      }
+      
+      .step-label {
+        transform: rotate(-45deg) translateY(10px);
+        width: 70px;
+        text-align: right;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="section container">
+    <div class="coffee-card">
+      <a href="products.html" class="back-button"><i class="fas fa-arrow-left"></i> Back to Products</a>
+      <h1 class="title">Order Tracking</h1>
+      
+      <div class="tracking-form">
+        <div class="tracking-input">
+          <input type="text" id="tracking-id" class="input" placeholder="Enter Your Order ID">
+          <button id="track-button" class="button">Track Order</button>
+        </div>
+      </div>
+      
+      <div id="loading" class="loading">
+        <i class="fas fa-spinner"></i>
+      </div>
+      
+      <div id="error-message" class="error-message"></div>
+      
+      <div id="order-details" class="order-details">
+        <div class="order-info">
+          <div class="order-info-row">
+            <span class="order-info-label">Order ID:</span>
+            <span class="order-info-value" id="order-id"></span>
+          </div>
+          <div class="order-info-row">
+            <span class="order-info-label">Customer Name:</span>
+            <span class="order-info-value" id="customer-name"></span>
+          </div>
+          <div class="order-info-row">
+            <span class="order-info-label">Product:</span>
+            <span class="order-info-value" id="product-name"></span>
+          </div>
+          <div class="order-info-row">
+            <span class="order-info-label">Order Total:</span>
+            <span class="order-info-value" id="order-total"></span>
+          </div>
+          <div class="order-info-row">
+            <span class="order-info-label">Payment Method:</span>
+            <span class="order-info-value" id="payment-method"></span>
+          </div>
+        </div>
+        
+        <div class="tracking-progress">
+          <h2 class="progress-title">Order Status</h2>
+          
+          <div class="progress-steps">
+            <div class="progress-line" id="progress-line"></div>
+            
+            <div class="progress-step" id="step-1">
+              <div class="step-indicator">1</div>
+            </div>
+            
+            <div class="progress-step" id="step-2">
+              <div class="step-indicator">2</div>
+            </div>
+            
+            <div class="progress-step" id="step-3">
+              <div class="step-indicator">3</div>
+            </div>
+            
+            <div class="progress-step" id="step-4">
+              <div class="step-indicator">4</div>
+            </div>
+            
+            <div class="progress-step" id="step-5">
+              <div class="step-indicator">5</div>
+            </div>
+          </div>
+          
+          <div id="status-message" class="order-info"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+  <script>
+    // Elements
+    const trackingIdInput = document.getElementById('tracking-id');
+    const trackButton = document.getElementById('track-button');
+    const orderDetails = document.getElementById('order-details');
+    const loading = document.getElementById('loading');
+    const errorMessage = document.getElementById('error-message');
+    const orderId = document.getElementById('order-id');
+    const customerName = document.getElementById('customer-name');
+    const productName = document.getElementById('product-name');
+    const orderTotal = document.getElementById('order-total');
+    const paymentMethod = document.getElementById('payment-method');
+    const progressLine = document.getElementById('progress-line');
+    const statusMessage = document.getElementById('status-message');
+    
+    // Initialize Supabase client
+    const { createClient } = supabase;
+    const supabaseClient = createClient(
+      "https://biymjgwlkvhdvdnotmrj.supabase.co",
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpeW1qZ3dsa3ZoZHZkbm90bXJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ1MzAyOTAsImV4cCI6MjA2MDEwNjI5MH0.OyIcTLYL8eGTp-hXzrfMhTpLrFDQu0yx64dy4gqueKw"
+    );
+    
+    // Status map - Define step numbers explicitly for each status
+    const statusMap = {
+      'new': { step: 1, message: 'Your order has been received and is being processed.' },
+      'packed': { step: 2, message: 'Your order has been packed and is ready for dispatch.' },
+      'dispatched': { step: 3, message: 'Your order has been dispatched and is on its way to you.' },
+      'payment': { step: 4, message: 'Your order has arrived! Payment is pending. Please keep the exact amount ready.' },
+      'delivered': { step: 5, message: 'Your order has been successfully delivered. Enjoy your coffee!' }
+    };
+    
+    // Function to determine the step number for a status
+    function getStepForStatus(status) {
+      // Default to step 1 (Order Placed) if status is not found or undefined
+      if (!status || !statusMap[status]) {
+        return 1;
+      }
+      return statusMap[status].step;
+    }
+    
+    // Function to get status message
+    function getStatusMessage(status) {
+      // Default message if status is not found or undefined
+      if (!status || !statusMap[status]) {
+        return 'Your order has been received and is being processed.';
+      }
+      return statusMap[status].message;
+    }
+    
+    // Function to update progress bar based on status
+    function updateProgressBar(status) {
+      // Handle undefined or empty status gracefully
+      if (!status) {
+        status = 'new'; // Default to 'new' status
+      }
+      
+      const currentStep = getStepForStatus(status);
+      
+      // Reset all steps
+      for (let i = 1; i <= 5; i++) {
+        const step = document.getElementById(`step-${i}`);
+        step.className = 'progress-step';
+      }
+      
+      // Set active steps
+      for (let i = 1; i <= currentStep; i++) {
+        const step = document.getElementById(`step-${i}`);
+        step.classList.add('active');
+      }
+      
+      // If payment pending, make it special
+      if (status === 'payment') {
+        document.getElementById('step-4').classList.remove('active');
+        document.getElementById('step-4').classList.add('pending');
+      }
+      
+      // Update progress line width - FIXED CALCULATION
+      const totalSteps = 5; // Total number of steps
+      const stepWidth = 100 / (totalSteps - 1); // Width per step
+      const progressPercentage = (currentStep - 1) * stepWidth;
+      progressLine.style.width = `${progressPercentage}%`;
+      
+      // Update status message
+      statusMessage.textContent = getStatusMessage(status);
+    }
+    
+    // Function to fetch order details
+    async function fetchOrderDetails(id) {
+      loading.style.display = 'block';
+      orderDetails.style.display = 'none';
+      errorMessage.style.display = 'none';
+      
+      try {
+        const { data, error } = await supabaseClient
+          .from('orders')
+          .select('*')
+          .eq('id', id)
+          .single();
+        
+        loading.style.display = 'none';
+        
+        if (error) {
+          throw new Error('Error fetching order details');
+        }
+        
+        if (!data) {
+          throw new Error('Order not found');
+        }
+        
+        console.log("Order data:", data); // Debug logging
+        
+        // Update order details
+        orderId.textContent = data.id;
+        customerName.textContent = data.name;
+        productName.textContent = data.product;
+        orderTotal.textContent = `Rs ${data.totalPrice}`;
+        paymentMethod.textContent = data.paymentMethod;
+        
+        // Update progress bar with a default status if not present
+        updateProgressBar(data.status || 'new');
+        
+        orderDetails.style.display = 'block';
+        
+        // Set up real-time listener for this order
+        setupRealtimeListener(id);
+        
+      } catch (err) {
+        console.error("Error:", err); // Debug logging
+        errorMessage.textContent = err.message;
+        errorMessage.style.display = 'block';
+      }
+    }
+    
+    // Function to set up real-time listener
+    function setupRealtimeListener(id) {
+      // Remove any existing subscription
+      supabaseClient.removeAllChannels();
+      
+      // Subscribe to changes for this specific order
+      const channel = supabaseClient
+        .channel('public:orders')
+        .on(
+          'postgres_changes',
+          {
+            event: 'UPDATE',
+            schema: 'public',
+            table: 'orders',
+            filter: `id=eq.${id}`
+          },
+          (payload) => {
+            console.log("Real-time update:", payload); // Debug logging
+            
+            // Update progress bar with new status, defaulting to 'new' if not present
+            updateProgressBar(payload.new.status || 'new');
+          }
+        )
+        .subscribe((status) => {
+          console.log("Subscription status:", status); // Debug logging
+        });
+    }
+    
+    // Event Listeners
+    trackButton.addEventListener('click', () => {
+      const id = trackingIdInput.value.trim();
+      
+      if (!id) {
+        errorMessage.textContent = 'Please enter an Order ID';
+        errorMessage.style.display = 'block';
+        return;
+      }
+      
+      fetchOrderDetails(id);
+    });
+    
+    trackingIdInput.addEventListener('keyup', (e) => {
+      if (e.key === 'Enter') {
+        trackButton.click();
+      }
+    });
+    
+    // Auto-fill tracking ID from URL query parameter if present
+    window.addEventListener('DOMContentLoaded', () => {
+      const urlParams = new URLSearchParams(window.location.search);
+      const trackingId = urlParams.get('id');
+      
+      if (trackingId) {
+        trackingIdInput.value = trackingId;
+        trackButton.click();
+      }
+    });
+  </script>
+</body>
+</html>

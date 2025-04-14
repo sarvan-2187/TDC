@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - TDC</title>
+    <link rel="icon" href="Assets/Org.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #5D4037;
+            background-color: #f4f1ea;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background: linear-gradient(135deg, rgb(0, 0, 0, 0.5), rgb(0, 0, 0, 0.5)) ,url(Assets/login-background.jpg); 
+            background-position: center;
+            background-size: cover;  
+        }
+        
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top-right-radius: 12px;
+            border-top-left-radius: 12px;
+            padding: 20px 15px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .nav a:hover {
+            color: #5d4037;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin: 40px 0;
+            color: #3E2723;
+            font-size: 32px;
+            font-weight: 700;
+        }
+        
+        .orders-container {
+            background-color: #FFFFFF;
+            padding: 30px;
+            border-bottom-left-radius: 12px;
+            border-bottom-right-radius: 12px ;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        
+        .order-card {
+            background-color: #f9f5f0;
+            border-radius: 8px;
+            border: 1px solid #d5bdaf;
+            margin-bottom: 20px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .order-card:hover {
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transform: translateY(-3px);
+        }
+        
+        .order-header {
+            background-color: #6D4C41;
+            color: #ffffff;
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .order-id {
+            font-weight: 600;
+            font-size: 18px;
+        }
+        
+        .order-status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 500;
+        }
+        
+        .status-new {
+            background-color: #42A5F5;
+        }
+        
+        .status-processing {
+            background-color: #FFA726;
+        }
+        
+        .status-shipped {
+            background-color: #66BB6A;
+        }
+        
+        .status-delivered {
+            background-color: #4CAF50;
+        }
+        
+        .status-cancelled {
+            background-color: #EF5350;
+        }
+        
+        .order-body {
+            padding: 20px;
+        }
+        
+        .order-detail {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 5px 0;
+            border-bottom: 1px dashed #e0e0e0;
+        }
+        
+        .order-detail:last-child {
+            border-bottom: none;
+        }
+        
+        .detail-label {
+            font-weight: 500;
+            color: #6D4C41;
+        }
+        
+        .detail-value {
+            color: #5D4037;
+        }
+        
+        .order-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #f4f1ea;
+            border-top: 1px solid #e0e0e0;
+        }
+        
+        .order-date {
+            color: #8D6E63;
+            font-size: 14px;
+        }
+        
+        .order-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            background-color: #795548;
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            font-size: 14px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .btn:hover {
+            background-color: #5D4037;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: #795548;
+            border: 1px solid #795548;
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(121, 85, 72, 0.1);
+        }
+        
+        .no-orders {
+            text-align: center;
+            padding: 40px 20px;
+            color: #8D6E63;
+        }
+        
+        .no-orders i {
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #BCAAA4;
+        }
+        
+        .no-orders h3 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            color: #6D4C41;
+        }
+        
+        .no-orders p {
+            margin-bottom: 20px;
+        }
+        
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 0;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(121, 85, 72, 0.2);
+            border-top: 4px solid #795548;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px 0;
+            color: #8D6E63;
+            font-size: 14px;
+            font-weight: 300;
+        }
+        
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                background-color: #ffffff;
+                padding: 20px;
+            }
+
+            .logo {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 10px;
+            }
+
+            .nav {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                align-items: stretch;
+                gap: 8px;
+            }
+
+            .nav a {
+                display: block;
+                padding: 12px 16px;
+                background-color: #e6e6e6;
+                border-radius: 10px;
+                color: #333;
+                font-weight: 500;
+                text-align: center;
+                transition: background-color 0.2s ease;
+            }
+
+            .nav a:hover {
+                background-color: #d2b48c;
+                color: #fff;
+            }
+            
+            .order-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .order-status {
+                align-self: flex-start;
+            }
+            
+            .order-footer {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .order-actions {
+                width: 100%;
+            }
+            
+            .btn {
+                flex: 1;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="Assets/Org.png" alt="Tanjore Degree Coffee" width="100">
+                <h1>Tanjore Degree Coffee</h1>
+            </div>
+            <nav class="nav">
+                <a href="products.html">Shop</a>
+                <a href="my-orders.html">My Orders</a>
+                <a href="tracking.html">Track Order</a>
+                <a href="contact-form.html">Contact Us</a>
+                <a id="logout-btn" style="cursor: pointer;">Logout</a>
+            </nav>
+        </header>
+        
+        <div class="orders-container" id="orders-container">
+            <h1 class="page-title">My Orders</h1>
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Fetching your orders...</p>
+            </div>
+            
+            <div id="orders-list" style="display: none;"></div>
+            
+            <div id="no-orders" class="no-orders" style="display: none;">
+                <i class="fas fa-shopping-bag"></i>
+                <h3>No Orders Found</h3>
+                <p>You haven't placed any orders with us yet.</p>
+                <a href="products.html" class="btn">Start Shopping</a>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 Tanjore Degree Coffee. All rights reserved.</p>
+        </footer>
+    </div>
+    
+    <script src="https://unpkg.com/@supabase/supabase-js"></script>
+    <script>
+        // Initialize Supabase client
+        const { createClient } = supabase;
+        const supabaseClient = createClient(
+            "https://biymjgwlkvhdvdnotmrj.supabase.co", 
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpeW1qZ3dsa3ZoZHZkbm90bXJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ1MzAyOTAsImV4cCI6MjA2MDEwNjI5MH0.OyIcTLYL8eGTp-hXzrfMhTpLrFDQu0yx64dy4gqueKw"
+        );
+        
+        // DOM elements
+        const loading = document.getElementById('loading');
+        const ordersList = document.getElementById('orders-list');
+        const noOrders = document.getElementById('no-orders');
+        const logoutBtn = document.getElementById('logout-btn');
+        
+        // Format date function
+        function formatDate(dateString) {
+            const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
+            return new Date(dateString).toLocaleDateString('en-US', options);
+        }
+        
+        // Get status class function
+        function getStatusClass(status) {
+            switch(status.toLowerCase()) {
+                case 'new':
+                    return 'status-new';
+                case 'processing':
+                    return 'status-processing';
+                case 'shipped':
+                    return 'status-shipped';
+                case 'delivered':
+                    return 'status-delivered';
+                case 'cancelled':
+                    return 'status-cancelled';
+                default:
+                    return '';
+            }
+        }
+        
+        // Fetch orders function
+        async function fetchOrders() {
+            try {
+                // Check if user is logged in
+                const user = JSON.parse(localStorage.getItem('user'));
+                if (!user || !user.email) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+                
+                // Fetch orders from Supabase based on user email
+                const { data, error } = await supabaseClient
+                    .from('orders')
+                    .select('*')
+                    .eq('email', user.email)
+                    .order('created_at', { ascending: false });
+                
+                if (error) {
+                    throw error;
+                }
+                
+                // Display orders or show no orders message
+                if (data && data.length) {
+                    displayOrders(data);
+                } else {
+                    showNoOrders();
+                }
+                
+            } catch (error) {
+                console.error('Error fetching orders:', error);
+                alert('There was an error fetching your orders. Please try again.');
+                showNoOrders();
+            }
+        }
+        
+        // Display orders function
+        function displayOrders(orders) {
+            ordersList.innerHTML = '';
+            
+            orders.forEach(order => {
+                const orderCard = document.createElement('div');
+                orderCard.className = 'order-card';
+                
+                orderCard.innerHTML = `
+                    <div class="order-header">
+                        <div class="order-id">Order #${order.id}</div>
+                        <div class="order-status ${getStatusClass(order.status)}">${order.status || 'New'}</div>
+                    </div>
+                    <div class="order-body">
+                        <div class="order-detail">
+                            <span class="detail-label">Product:</span>
+                            <span class="detail-value">${order.product || '--'}</span>
+                        </div>
+                        <div class="order-detail">
+                            <span class="detail-label">Delivery Address:</span>
+                            <span class="detail-value">${order.address || '--'}</span>
+                        </div>
+                        <div class="order-detail">
+                            <span class="detail-label">Payment Method:</span>
+                            <span class="detail-value">${order.paymentMethod || '--'}</span>
+                        </div>
+                        <div class="order-detail">
+                            <span class="detail-label">Total Amount:</span>
+                            <span class="detail-value">Rs ${order.totalPrice || 0}</span>
+                        </div>
+                    </div>
+                    <div class="order-footer">
+                        <div class="order-date">
+                            <i class="far fa-calendar-alt"></i> 
+                            ${order.created_at ? formatDate(order.created_at) : 'N/A'}
+                        </div>
+                        <div class="order-actions">
+                            <a href="tracking.html?orderId=${order.id}" class="btn btn-outline">
+                                <i class="fas fa-truck"></i> Track Order
+                            </a>
+                            <a href="submitted-order.html?orderId=${order.id}" class="btn">
+                                <i class="fas fa-info-circle"></i> View Details
+                            </a>
+                        </div>
+                    </div>
+                `;
+                
+                ordersList.appendChild(orderCard);
+            });
+            
+            loading.style.display = 'none';
+            ordersList.style.display = 'block';
+        }
+        
+        // Show no orders function
+        function showNoOrders() {
+            loading.style.display = 'none';
+            noOrders.style.display = 'block';
+        }
+        
+        // Logout function
+        async function logout() {
+            try {
+                const { error } = await supabaseClient.auth.signOut();
+                
+                if (error) {
+                    throw error;
+                }
+                
+                localStorage.removeItem('user');
+                window.location.href = 'landing.html';
+                
+            } catch (error) {
+                console.error('Logout error:', error);
+                alert(`Logout failed: ${error.message || 'Unknown error'}`);
+            }
+        }
+        
+        // Event listeners
+        document.addEventListener('DOMContentLoaded', fetchOrders);
+        logoutBtn.addEventListener('click', logout);
+    </script>
+</body>
+</html>

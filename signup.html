@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup Page - TDC</title>
+    <link rel="icon" href="Assets/Org.png">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, rgb(0, 0, 0, 0.5), rgb(0, 0, 0, 0.5)) ,url(Assets/signup-background.jpg); 
+            background-position: center;
+            background-size: cover;   
+            display: flex;
+            padding: 10px;
+            color: #ffffff;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+        
+        .signup-container {
+            background: rgb(255, 255, 255);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(125, 125, 125, 0.3);
+            text-align: center;
+            width: 400px;
+            animation: slideupDown 2s linear infinite;
+        }
+        
+        .signup-container h2 {
+            margin-bottom: 0.5rem;
+            color: #000000;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: bold;
+        }
+        
+        .signup-container h3 {
+            margin-bottom: 1.5rem;
+            color: #000000;
+            font-family: 'DM Sans', sans-serif;
+        }
+        
+        .input-group {
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+        
+        .input-group label {
+            display: block;
+            font-size: 14px;
+            color: #000000;
+        }
+        
+        .input-group input {
+            width: 100%;
+            color: #000000;
+            background-color: #ffffff;
+            padding: 8px;
+            border-bottom: 2px solid rgb(111, 111, 111);
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            outline: none;
+            margin-top: 5px;
+            transition: all 0.5s ease;
+        }
+
+        a {
+            color: #000000;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        a:hover {
+            color: #8d8d8d;
+            text-decoration: underline;
+        }
+
+        .input-group input:focus {
+            border-bottom: 2px solid #1b5fa2;
+        }
+        
+        .signup-btn {
+            width: 100%;
+            padding: 10px;
+            background: #1b5fa2;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .signup-btn:hover {
+            background: #004ba0;
+            box-shadow: 0 0 10px rgba(169, 169, 169, 0.5);
+        }
+        
+        .signup-btn:disabled {
+            background: #aaa;
+        }
+        
+        .loading {
+            display: none;
+            margin-top: 10px;
+        }
+        
+        .loading span {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            margin: 0 2px;
+            background: #000000;
+            border-radius: 50%;
+            animation: bounce 1.2s infinite ease-in-out;
+        }
+        
+        .loading span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+        
+        .loading span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+        
+        .login-link {
+            margin-top: 1rem;
+            color: #000000;
+        }
+        
+        @keyframes bounce {
+            0%, 80%, 100% {
+                transform: scale(0);
+            }
+            40% {
+                transform: scale(1);
+            }
+        }
+
+        @keyframes slideupDown{
+            0%{
+                translate: 0 -5px;
+            }
+
+            50%{
+                translate: 0 0px;
+            }
+
+            100%{
+                translate: 0 -5px;
+            }
+        }
+        
+        .password-requirements {
+            font-size: 12px;
+            color: #797979;
+            margin-top: 5px;
+        }
+        
+        .toggle-password {
+            background-color: #1b5fa2;
+            color: rgb(255, 255, 255);
+            float: inline-end;
+            border: none;
+            border-radius: 5px;
+            font-size: 0.9rem;
+            padding: 0.3rem 0.7rem;
+            margin-top: 0.5rem;
+            margin-bottom: 2rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        
+        .toggle-password:hover {
+            background-color: #004ba0;
+        }
+        
+        .team-logo {
+            width: 80px;
+            height: auto;
+            margin-bottom: 10px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            margin: 1rem 0;
+            text-align: left;
+        }
+        
+        .checkbox-group input {
+            width: auto;
+            margin-right: 10px;
+            margin-top: 5px;
+        }
+        
+        .checkbox-label {
+            font-size: 14px;
+            flex: 1;
+        }
+        
+        @media (max-width: 768px) {
+            .signup-container {
+                box-shadow: none;
+                max-width: 95%;
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="signup-container">
+        <img src="Assets/Org.png" alt="TDC Logo" class="team-logo">
+        <h2>Tanjore Degree Coffee</h2>
+        <h3>Join the Family!</h3>
+        
+        <div class="input-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" placeholder="Enter your email" required name="email">
+            <span id="email_error" style="color: red;"></span>
+        </div>
+        
+        <div class="input-group">
+            <label for="password">Password</label>
+            <input type="password" id="password" placeholder="Create a password" required name="password">
+            <span id="pass_error" style="color: red;"></span>
+            <div class="password-requirements">
+                Password must be at least 8 characters with numbers and symbols
+            </div>
+            <button type="button" class="toggle-password" onclick="togglePassword('password')">Show</button>
+        </div>
+        
+        <button class="signup-btn" onclick="handleSignup()">Sign Up</button>
+        <div class="login-link">
+            <p>Already have an account? <a href="login.html">Login</a></p>
+        </div>
+        <div class="loading" id="loading">
+            <span></span><span></span><span></span>
+        </div>
+    </div>
+    
+    <script src="https://unpkg.com/@supabase/supabase-js"></script>
+    <script>
+        // Initialize Supabase client
+        const { createClient } = supabase;
+        const supabaseClient = createClient(
+            "https://biymjgwlkvhdvdnotmrj.supabase.co", 
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpeW1qZ3dsa3ZoZHZkbm90bXJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ1MzAyOTAsImV4cCI6MjA2MDEwNjI5MH0.OyIcTLYL8eGTp-hXzrfMhTpLrFDQu0yx64dy4gqueKw"
+        );
+        
+        function togglePassword(id) {
+            const passwordField = document.getElementById(id);
+            const toggleBtn = document.querySelector('.toggle-password');
+            
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                toggleBtn.textContent = 'Hide';
+            } else {
+                passwordField.type = 'password';
+                toggleBtn.textContent = 'Show';
+            }
+        }
+        
+        async function handleSignup() {
+            document.getElementById('email_error').textContent = '';
+            document.getElementById('pass_error').textContent = '';
+            
+            const email = document.getElementById('email').value.trim();
+            const password = document.getElementById('password').value;
+            
+            let isValid = true;
+            
+            if (!email) {
+                document.getElementById('email_error').textContent = 'Please enter your email';
+                isValid = false;
+            } else if (!/\S+@\S+\.\S+/.test(email)) {
+                document.getElementById('email_error').textContent = 'Please enter a valid email address';
+                isValid = false;
+            }
+            
+            if (!password) {
+                document.getElementById('pass_error').textContent = 'Please create a password';
+                isValid = false;
+            } else if (password.length < 8) {
+                document.getElementById('pass_error').textContent = 'Password must be at least 8 characters long';
+                isValid = false;
+            } else if (!/\d/.test(password) || !/[!@#$%^&*(),.?":{}|<>]/.test(password)) {
+                document.getElementById('pass_error').textContent = 'Password must include numbers and symbols';
+                isValid = false;
+            }
+            
+            if (isValid) {
+                document.getElementById('loading').style.display = 'block';
+                document.querySelector('.signup-btn').disabled = true;
+                
+                try {
+                    // First register the user with Supabase Auth
+                    const { data: authData, error: authError } = await supabaseClient.auth.signUp({
+                        email: email,
+                        password: password,
+                    });
+                    
+                    if (authError) {
+                        throw authError;
+                    }
+                    
+                    // If registration was successful, add the user to our users table
+                    const { error: insertError } = await supabaseClient
+                        .from('users')
+                        .insert([
+                            { 
+                                email: email,
+                                // We don't store the password here as it's handled by Supabase Auth
+                                created_at: new Date().toISOString()
+                            }
+                        ]);
+                    
+                    if (insertError) {
+                        throw insertError;
+                    }
+                    
+                    // Success - redirect to login page
+                    alert("Signup Successful! Please check your email for verification and then login.");
+                    window.location.href = 'login.html';
+                    
+                } catch (error) {
+                    console.error('Error during signup:', error);
+                    
+                    if (error.message.includes('already registered')) {
+                        document.getElementById('email_error').textContent = 'This email is already registered';
+                    } else {
+                        alert(`Signup failed: ${error.message || 'Unknown error'}`);
+                    }
+                    
+                    document.getElementById('loading').style.display = 'none';
+                    document.querySelector('.signup-btn').disabled = false;
+                }
+            }
+        }
+    </script>
+</body>
+</html>

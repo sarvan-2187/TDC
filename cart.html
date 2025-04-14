@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout - TDC</title>
+  <link rel="icon" href="Assets/Org.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/poppins/4.0.1/poppins.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --dark-brown: #3c2a21;
+      --medium-brown: #6b4f4f;
+      --light-brown: #d5bdaf;
+      --cream: #f4f1ea;
+      --text-dark: #2c1810;
+      --text-light: #f5f5f5;
+      --accent-gold: #cda349;
+      --border-radius: 6px;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      background-color: var(--cream);
+      color: var(--text-dark);
+      line-height: 1.6;
+      background-image: url("Assets/coffee-beans.png");
+      background-repeat: repeat;
+      background-attachment: fixed;
+      background-size: 200px;
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(244, 241, 234, 0.85);
+      z-index: -1;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .section {
+      padding: 60px 0;
+    }
+    
+    .coffee-card {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(60, 42, 33, 0.15);
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--light-brown);
+    }
+    
+    .coffee-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: linear-gradient(90deg, var(--dark-brown), var(--medium-brown), var(--light-brown));
+    }
+    
+    .title {
+      color: var(--dark-brown);
+      margin-bottom: 30px;
+      font-size: 2.3rem;
+      text-align: center;
+      font-weight: 600;
+      position: relative;
+      padding-bottom: 15px;
+      letter-spacing: -0.5px;
+    }
+    
+    .title::after {
+      content: "☕";
+      font-size: 1.5rem;
+      display: block;
+      text-align: center;
+      margin-top: 10px;
+      color: var(--accent-gold);
+    }
+    
+    .field {
+      margin-bottom: 25px;
+    }
+    
+    .label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--medium-brown);
+      font-size: 1rem;
+    }
+    
+    .control {
+      position: relative;
+    }
+    
+    .input, .textarea, .select select {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid var(--light-brown);
+      border-radius: var(--border-radius);
+      background-color: rgba(255, 255, 255, 0.9);
+      font-size: 15px;
+      transition: all 0.3s ease;
+      color: var(--text-dark);
+    }
+    
+    .input:focus, .textarea:focus, .select select:focus {
+      outline: none;
+      border-color: var(--medium-brown);
+      box-shadow: 0 0 0 3px rgba(107, 79, 79, 0.2);
+      background-color: white;
+    }
+    
+    .textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+    
+    .has-icons-left {
+      position: relative;
+    }
+    
+    .icon.is-small.is-left {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 16px;
+      color: var(--medium-brown);
+    }
+    
+    .has-icons-left .input {
+      padding-left: 45px;
+    }
+    
+    .select {
+      position: relative;
+      width: 100%;
+    }
+    
+    .select select {
+      cursor: pointer;
+      appearance: none;
+      padding-right: 40px;
+    }
+    
+    .select::after {
+      content: "▼";
+      font-size: 12px;
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: var(--medium-brown);
+    }
+    
+    .button {
+      display: inline-block;
+      background-color: var(--dark-brown);
+      color: var(--text-light);
+      border: none;
+      padding: 14px 28px;
+      border-radius: var(--border-radius);
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(60, 42, 33, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .button::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .button:hover {
+      background-color: var(--medium-brown);
+      transform: translateY(-2px);
+    }
+    
+    .button:hover::after {
+      opacity: 1;
+    }
+    
+    .button:active {
+      transform: translateY(0);
+    }
+    
+    .coffee-bean-decoration {
+      position: absolute;
+      font-size: 120px;
+      opacity: 0.05;
+      color: var(--dark-brown);
+      z-index: 0;
+    }
+    
+    .bean-1 {
+      top: 20px;
+      right: 30px;
+      transform: rotate(30deg);
+    }
+    
+    .bean-2 {
+      bottom: 40px;
+      left: 20px;
+      transform: rotate(-15deg);
+    }
+    
+    .price-details {
+      background-color: var(--cream);
+      border-radius: var(--border-radius);
+      padding: 15px;
+      margin-bottom: 25px;
+      border: 1px solid var(--light-brown);
+      display: none;
+    }
+    
+    .price-row {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+    }
+    
+    .price-total {
+      font-weight: 700;
+      margin-top: 8px;
+      padding-top: 8px;
+      border-top: 1px dashed var(--medium-brown);
+    }
+    
+    .payment-methods {
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+    
+    .payment-method {
+      display: flex;
+      align-items: center;
+      margin-bottom: 10px;
+      cursor: pointer;
+      padding: 10px;
+      border: 2px solid transparent;
+      border-radius: var(--border-radius);
+      transition: all 0.2s ease;
+    }
+    
+    .payment-method:hover {
+      background-color: var(--cream);
+    }
+    
+    .payment-method.selected {
+      border-color: var(--medium-brown);
+      background-color: var(--cream);
+    }
+    
+    .payment-method input {
+      margin-right: 10px;
+    }
+    
+    .payment-method-icon {
+      margin-right: 10px;
+      font-size: 1.2rem;
+      color: var(--medium-brown);
+      width: 24px;
+      text-align: center;
+    }
+    
+    .payment-method-label {
+      font-weight: 500;
+    }
+    
+    .location-field {
+      margin-top: 20px;
+    }
+    
+    .location-message {
+      margin-top: 8px;
+      font-size: 0.9rem;
+      padding: 10px;
+      border-radius: var(--border-radius);
+      display: none;
+    }
+    
+    .location-valid {
+      background-color: rgba(76, 175, 80, 0.1);
+      border: 1px solid #4CAF50;
+      color: #2E7D32;
+    }
+    
+    .location-invalid {
+      background-color: rgba(244, 67, 54, 0.1);
+      border: 1px solid #F44336;
+      color: #C62828;
+    }
+    
+    .location-checking {
+      background-color: rgba(255, 193, 7, 0.1);
+      border: 1px solid #FFC107;
+      color: #FF8F00;
+      display: block;
+    }
+    
+    .location-button {
+      background-color: var(--medium-brown);
+      color: var(--text-light);
+      border: none;
+      padding: 10px 16px;
+      border-radius: var(--border-radius);
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 10px;
+      width: 100%;
+    }
+
+    .location-button i {
+      font-size: 16px;
+    }
+    
+    .location-button:hover {
+      background-color: var(--dark-brown);
+    }
+    
+    .address-message {
+      margin-top: 8px;
+      font-size: 0.9rem;
+      padding: 10px;
+      border-radius: var(--border-radius);
+      display: none;
+    }
+    
+    .address-valid {
+      background-color: rgba(76, 175, 80, 0.1);
+      border: 1px solid #4CAF50;
+      color: #2E7D32;
+    }
+    
+    .address-invalid {
+      background-color: rgba(244, 67, 54, 0.1);
+      border: 1px solid #F44336;
+      color: #C62828;
+    }
+    
+    .address-checking {
+      background-color: rgba(255, 193, 7, 0.1);
+      border: 1px solid #FFC107;
+      color: #FF8F00;
+    }
+    
+    @media (max-width: 768px) {
+      .section {
+        padding: 40px 0;
+      }
+      .title {
+        font-size: 2rem;
+      }
+      .coffee-card {
+        padding: 30px 20px;
+      }
+    }
+    
+    ::placeholder {
+      color: #b0a093;
+      opacity: 0.7;
+    }
+
+    #map-container {
+      height: 200px;
+      width: 100%;
+      border-radius: var(--border-radius);
+      margin-bottom: 15px;
+      border: 2px solid var(--light-brown);
+      overflow: hidden;
+      display: none;
+    }
+    
+    .loading-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(244, 241, 234, 0.9);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      display: none;
+    }
+    
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(107, 79, 79, 0.3);
+      border-radius: 50%;
+      border-top-color: var(--medium-brown);
+      animation: spin 1s ease-in-out infinite;
+    }
+    
+    .loading-text {
+      margin-top: 20px;
+      font-size: 18px;
+      color: var(--medium-brown);
+      font-weight: 500;
+    }
+    
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <div class="loading-overlay" id="loading-overlay">
+    <div class="spinner"></div>
+    <div class="loading-text">Processing your order...</div>
+  </div>
+
+  <section class="section container">
+    <div class="coffee-card">
+      
+      <form name="product" id="product-form">
+        <h1 class="title" id="product">Proceed With Payment</h1>
+        
+        <div class="field">
+          <label class="label" for="name">Your Name</label>
+          <div class="control">
+            <input
+              required
+              class="input"
+              type="text"
+              placeholder="How should we address you?"
+              name="name"
+            />
+          </div>
+        </div>
+
+        <div class="field">
+            <label class="label" for="phone">Your Phone Number</label>
+            <div class="control">
+              <input
+                required
+                class="input"
+                type="text"
+                placeholder="Where should we call you?"
+                name="phone"
+                pattern="\d{10}"
+                minlength="10"
+                maxlength="10"
+                title="Enter a valid 10-digit phone number"
+              />
+            </div>
+          </div>          
+        
+        <div class="field">
+          <label class="label" for="email">Email</label>
+          <div class="control has-icons-left">
+            <input
+              class="input"
+              type="email"
+              required
+              placeholder="Where should we send your order details?"
+              name="email"
+            />
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+          </div>
+        </div>
+        
+        <div class="field">
+          <label class="label" for="product">Select a Product</label>
+          <div class="control">
+            <div class="select">
+              <select name="product" id="product-select">
+                <option value="">Select a Product</option>
+                <option value="Rose Milk Powder" data-price="100">Rose Milk Powder</option>
+                <option value="Instant Coffee Sachets" data-price="50">Instant Coffee Sachets (10)</option>
+                <option value="Bold Coffee Decoction" data-price="250">Coffee Decoction (Bold)</option>
+                <option value="Coffee Decoction" data-price="150">Coffee Decoction</option>
+                <option value="Coffee Beans" data-price="300">Coffee Beans</option>
+                <option value="Basic Coffee Mug" data-price="150">Basic Coffee Mug</option>
+                <option value="Premium Coffee Mug" data-price="350">Premium Coffee Mug</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <div id="price-details" class="price-details">
+          <div class="price-row">
+            <span>Base Price:</span>
+            <span id="base-price">Rs 0</span>
+          </div>
+          <div class="price-row">
+            <span>GST (18%):</span>
+            <span id="gst-amount">Rs 0</span>
+          </div>
+          <div class="price-row price-total">
+            <span>Total Price:</span>
+            <span id="total-price">Rs 0</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label class="label">Check Delivery Availability</label>
+          <button type="button" id="location-button" class="location-button">
+            <i class="fas fa-map-marker-alt"></i> Get My Current Location
+          </button>
+          <div id="map-container"></div>
+          <div id="location-message" class="location-message location-checking">
+            Click the button above to check if we deliver to your location
+          </div>
+          <input type="hidden" id="latitude" name="latitude">
+          <input type="hidden" id="longitude" name="longitude">
+          <input type="hidden" id="isLocationValid" name="isLocationValid" value="false">
+        </div>
+        
+        <div class="field">
+          <label class="label" for="address">Your Address</label>
+          <div class="control">
+            <textarea
+              required
+              class="textarea"
+              placeholder="Enter your full address details"
+              name="address"
+              id="address-input"
+            ></textarea>
+          </div>
+          <div id="address-message" class="address-message"></div>
+        </div>
+        
+        <div class="field">
+          <label class="label">Payment Method</label>
+          <div class="payment-methods">
+            <div class="payment-method" onclick="selectPayment('cod')">
+              <input type="radio" name="paymentMethod" id="cod" value="COD" required />
+              <span class="payment-method-icon"><i class="fas fa-money-bill-wave"></i></span>
+              <span class="payment-method-label">Cash on Delivery</span>
+            </div>
+            <div class="payment-method" onclick="selectPayment('upi')">
+              <input type="radio" name="paymentMethod" id="upi" value="UPI" />
+              <span class="payment-method-icon"><i class="fas fa-mobile-alt"></i></span>
+              <span class="payment-method-label">UPI on Delivery</span>
+            </div>
+          </div>
+        </div>
+        
+        <div class="field">
+          <div class="control">
+            <button class="button is-primary" type="submit" id="submit-button">Place Order</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+  
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+  <script>
+    const productSelect = document.getElementById('product-select');
+    const priceDetails = document.getElementById('price-details');
+    const basePrice = document.getElementById('base-price');
+    const gstAmount = document.getElementById('gst-amount');
+    const totalPrice = document.getElementById('total-price');
+    const locationButton = document.getElementById('location-button');
+    const locationMessage = document.getElementById('location-message');
+    const addressInput = document.getElementById('address-input');
+    const submitButton = document.getElementById('submit-button');
+    const latitudeInput = document.getElementById('latitude');
+    const longitudeInput = document.getElementById('longitude');
+    const isLocationValidInput = document.getElementById('isLocationValid');
+    const mapContainer = document.getElementById('map-container');
+    const loadingOverlay = document.getElementById('loading-overlay');
+    
+    let isLocationValid = false;
+    
+    const STORE_LATITUDE = 13.0846;
+    const STORE_LONGITUDE = 80.2132;
+    const MAX_DELIVERY_DISTANCE = 30; 
+    
+    function calculateDistance(lat1, lon1, lat2, lon2) {
+      const R = 6371; 
+      const dLat = (lat2 - lat1) * (Math.PI / 180);
+      const dLon = (lon2 - lon1) * (Math.PI / 180);
+      const a = 
+        Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+        Math.cos(lat1 * (Math.PI / 180)) * Math.cos(lat2 * (Math.PI / 180)) * 
+        Math.sin(dLon / 2) * Math.sin(dLon / 2);
+      const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+      const distance = R * c; 
+      return distance;
+    }
+    
+    function getUserLocation() {
+      if (navigator.geolocation) {
+        locationMessage.textContent = 'Getting your location...';
+        locationMessage.className = 'location-message location-checking';
+        locationMessage.style.display = 'block';
+        
+        navigator.geolocation.getCurrentPosition(
+          (position) => {
+            const userLat = position.coords.latitude;
+            const userLng = position.coords.longitude;
+            
+            latitudeInput.value = userLat;
+            longitudeInput.value = userLng;
+            
+            const distanceFromStore = calculateDistance(
+              STORE_LATITUDE, STORE_LONGITUDE, userLat, userLng
+            );
+            
+            const formattedDistance = distanceFromStore.toFixed(1);
+            
+            if (distanceFromStore <= MAX_DELIVERY_DISTANCE) {
+              locationMessage.textContent = `Great! Your location is approximately ${formattedDistance} km from our store. We deliver to your area!`;
+              locationMessage.className = 'location-message location-valid';
+              isLocationValid = true;
+              isLocationValidInput.value = "true";
+              
+              fetchAddressFromCoordinates(userLat, userLng);
+            } else {
+              locationMessage.textContent = `Sorry, your location is approximately ${formattedDistance} km from our store. We currently only deliver within 30 km of our Anna Nagar West store.`;
+              locationMessage.className = 'location-message location-invalid';
+              isLocationValid = false;
+              isLocationValidInput.value = "false";
+            }
+            
+            displayMap(userLat, userLng, distanceFromStore <= MAX_DELIVERY_DISTANCE);
+          },
+          (error) => {
+            console.error("Error getting location:", error);
+            
+            switch(error.code) {
+              case error.PERMISSION_DENIED:
+                locationMessage.textContent = "Location access was denied. Please enable location services in your browser to check delivery availability.";
+                break;
+              case error.POSITION_UNAVAILABLE:
+                locationMessage.textContent = "Location information is unavailable. Please enter your address manually.";
+                break;
+              case error.TIMEOUT:
+                locationMessage.textContent = "The request to get your location timed out. Please try again.";
+                break;
+              default:
+                locationMessage.textContent = "An unknown error occurred while getting your location. Please try again.";
+            }
+            
+            locationMessage.className = 'location-message location-invalid';
+          },
+          {
+            enableHighAccuracy: true,
+            timeout: 10000,
+            maximumAge: 0
+          }
+        );
+      } else {
+        locationMessage.textContent = "Geolocation is not supported by your browser. Please enter your address manually.";
+        locationMessage.className = 'location-message location-invalid';
+        locationMessage.style.display = 'block';
+      }
+    }
+    
+    function fetchAddressFromCoordinates(lat, lng) {
+      // In a real application, this would use a reverse geocoding service
+      // For now, we'll just provide a hint to the user
+      if (!addressInput.value.trim()) {
+        setTimeout(() => {
+          addressInput.value = "Based on your location (please verify and complete your address)";
+        }, 1000);
+      }
+    }
+    
+    function displayMap(lat, lng, isInRange) {
+      // In a real application, this would use a mapping API like Google Maps
+      // For now, we'll show a simplified representation
+      mapContainer.style.display = 'block';
+      
+      mapContainer.innerHTML = `
+        <div style="position: relative; height: 100%; width: 100%; background-color: #e9e9e9; overflow: hidden;">
+          <div style="position: absolute; top: 10px; left: 10px; right: 10px; display: flex; justify-content: space-between;">
+            <div style="font-size: 12px; background: white; padding: 5px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+              Your Location
+            </div>
+            <div style="font-size: 12px; background: white; padding: 5px; border-radius: 4px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+              ${isInRange ? '✓ Within Delivery Range' : '✗ Outside Delivery Range'}
+            </div>
+          </div>
+          <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+            <div style="width: 20px; height: 20px; background-color: ${isInRange ? '#4CAF50' : '#F44336'}; border-radius: 50%; box-shadow: 0 0 0 5px rgba(${isInRange ? '76, 175, 80' : '244, 67, 54'}, 0.3);"></div>
+          </div>
+          <div style="position: absolute; bottom: 10px; left: 0; right: 0; text-align: center; font-size: 11px; color: #666;">
+            Tap to see larger map (simulated)
+          </div>
+        </div>
+      `;
+    }
+ 
+    locationButton.addEventListener('click', getUserLocation);
+  
+    productSelect.addEventListener('change', function() {
+      const selectedOption = this.options[this.selectedIndex];
+      const price = selectedOption.dataset.price ? parseInt(selectedOption.dataset.price) : 0;
+      
+      if (price > 0) {
+        const gst = Math.round(price * 0.18);
+        const total = price + gst;
+        
+        basePrice.textContent = `Rs ${price}`;
+        gstAmount.textContent = `Rs ${gst}`;
+        totalPrice.textContent = `Rs ${total}`;
+        
+        priceDetails.style.display = 'block';
+      } else {
+        priceDetails.style.display = 'none';
+      }
+    });
+    
+    function selectPayment(id) {
+      document.querySelectorAll('.payment-method').forEach(method => {
+        method.classList.remove('selected');
+      });
+  
+      document.querySelector(`#${id}`).closest('.payment-method').classList.add('selected');
+      
+      document.querySelector(`#${id}`).checked = true;
+    }
+    
+    const { createClient } = supabase;
+    const supabaseClient = createClient(
+      "https://biymjgwlkvhdvdnotmrj.supabase.co", 
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpeW1qZ3dsa3ZoZHZkbm90bXJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ1MzAyOTAsImV4cCI6MjA2MDEwNjI5MH0.OyIcTLYL8eGTp-hXzrfMhTpLrFDQu0yx64dy4gqueKw"
+    );
+    
+    const form = document.querySelector('#product-form')
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault()
+      
+      const phoneInput = form.querySelector('input[name="phone"]').value;
+      const phonePattern = /^\d{10}$/;
+      
+      if (!phonePattern.test(phoneInput)) {
+        alert("Please enter a valid 10-digit phone number.");
+        return;
+      }
+      
+      if (!productSelect.value) {
+        alert("Please select a product.");
+        return;
+      }
+      
+      const paymentMethod = document.querySelector('input[name="paymentMethod"]:checked');
+      if (!paymentMethod) {
+        alert("Please select a payment method.");
+        return;
+      }
+      
+      if (!isLocationValid) {
+        alert("Please check if we deliver to your location using the location button.");
+        return;
+      }
+      
+      // Show loading overlay
+      loadingOverlay.style.display = 'flex';
+      
+      const formInputs = form.querySelectorAll('input, select, textarea')
+      
+      let submission = {}
+      
+      formInputs.forEach(element => {
+        const { value, name } = element
+        if (value) {
+          submission[name] = value
+        }
+      })
+      
+      const selectedOption = productSelect.options[productSelect.selectedIndex];
+      const price = selectedOption.dataset.price ? parseInt(selectedOption.dataset.price) : 0;
+      const gst = Math.round(price * 0.18);
+      const total = price + gst;
+      
+      submission.basePrice = price;
+      submission.gst = gst;
+      submission.totalPrice = total;
+      submission.status = "New"; // Default status for new orders
+      
+      try {
+        // Insert the order data
+        const { data, error } = await supabaseClient
+          .from('orders')
+          .insert([submission])
+          .select();
+        
+        if (error) {
+          throw error;
+        }
+        
+        // Get the order ID from the response
+        const orderId = data && data[0] ? data[0].id : null;
+        
+        // Store the order ID in localStorage as a backup
+        if (orderId) {
+          localStorage.setItem('latestOrderId', orderId);
+        }
+        
+        // Redirect to the order confirmation page with the order ID in the URL
+        window.location.href = `submitted-order.html?orderId=${orderId}`;
+        
+      } catch (error) {
+        // Hide loading overlay
+        loadingOverlay.style.display = 'none';
+        
+        alert('There was an error processing your order. Please try again.');
+        console.error(error);
+      }
+    });
+  </script>
+</body>
+</html>

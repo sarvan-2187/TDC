@@ -1,0 +1,371 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - TDC</title>
+  <link rel="icon" href="Assets/Org.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/poppins/4.0.1/poppins.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --dark-brown: #3c2a21;
+      --medium-brown: #6b4f4f;
+      --light-brown: #d5bdaf;
+      --cream: #f4f1ea;
+      --text-dark: #2c1810;
+      --text-light: #f5f5f5;
+      --accent-gold: #cda349;
+      --border-radius: 6px;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      background-color: var(--cream);
+      color: var(--text-dark);
+      line-height: 1.6;
+      background-image: url("Assets/contact-background.jpg");
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+      position: relative;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+
+    
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(41, 41, 41, 0.85);
+      z-index: -1;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    .section {
+      padding: 60px 0;
+    }
+    
+    .coffee-card {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(60, 42, 33, 0.15);
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--light-brown);
+    }
+    
+    .coffee-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: linear-gradient(90deg, var(--dark-brown), var(--medium-brown), var(--light-brown));
+    }
+    
+    .title {
+      color: var(--dark-brown);
+      margin-bottom: 30px;
+      font-size: 2.3rem;
+      text-align: center;
+      font-weight: 600;
+      position: relative;
+      padding-bottom: 15px;
+      letter-spacing: -0.5px;
+    }
+    
+    .title::after {
+      content: "☕";
+      font-size: 1.5rem;
+      display: block;
+      text-align: center;
+      margin-top: 10px;
+      color: var(--accent-gold);
+    }
+    
+    .field {
+      margin-bottom: 25px;
+    }
+    
+    .label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--medium-brown);
+      font-size: 1rem;
+    }
+    
+    .control {
+      position: relative;
+    }
+    
+    .input, .textarea, .select select {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid var(--light-brown);
+      border-radius: var(--border-radius);
+      background-color: rgba(255, 255, 255, 0.9);
+      font-size: 15px;
+      transition: all 0.3s ease;
+      color: var(--text-dark);
+    }
+    
+    .input:focus, .textarea:focus, .select select:focus {
+      outline: none;
+      border-color: var(--medium-brown);
+      box-shadow: 0 0 0 3px rgba(107, 79, 79, 0.2);
+      background-color: white;
+    }
+    
+    .textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+    
+    .has-icons-left {
+      position: relative;
+    }
+    
+    .icon.is-small.is-left {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 16px;
+      color: var(--medium-brown);
+    }
+    
+    .has-icons-left .input {
+      padding-left: 45px;
+    }
+    
+    .select {
+      position: relative;
+      width: 100%;
+    }
+    
+    .select select {
+      cursor: pointer;
+      appearance: none;
+      padding-right: 40px;
+    }
+    
+    .select::after {
+      content: "▼";
+      font-size: 12px;
+      position: absolute;
+      right: 16px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: var(--medium-brown);
+    }
+    
+    .button {
+      display: inline-block;
+      background-color: var(--dark-brown);
+      color: var(--text-light);
+      border: none;
+      padding: 14px 28px;
+      border-radius: var(--border-radius);
+      font-size: 15px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(60, 42, 33, 0.1);
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .button::after {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0) 100%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    
+    .button:hover {
+      background-color: var(--medium-brown);
+      transform: translateY(-2px);
+    }
+    
+    .button:hover::after {
+      opacity: 1;
+    }
+    
+    .button:active {
+      transform: translateY(0);
+    }
+    
+    .coffee-bean-decoration {
+      position: absolute;
+      font-size: 120px;
+      opacity: 0.05;
+      color: var(--dark-brown);
+      z-index: 0;
+    }
+    
+    .bean-1 {
+      top: 20px;
+      right: 30px;
+      transform: rotate(30deg);
+    }
+    
+    .bean-2 {
+      bottom: 40px;
+      left: 20px;
+      transform: rotate(-15deg);
+    }
+    
+    @media (max-width: 768px) {
+      .section {
+        padding: 40px 0;
+      }
+      .title {
+        font-size: 2rem;
+      }
+      .coffee-card {
+        padding: 30px 20px;
+        border-radius: none;
+      }
+    }
+    
+    ::placeholder {
+      color: #b0a093;
+      opacity: 0.7;
+    }
+  </style>
+</head>
+<body>
+  <section class="section container">
+    <div class="coffee-card">
+      <span class="coffee-bean-decoration bean-1">☕</span>
+      <span class="coffee-bean-decoration bean-2">☕</span>
+      
+      <form name="contact" id="contact-form">
+        <h1 class="title" id="contact">Contact Us</h1>
+        
+        <div class="field">
+          <label class="label" for="name">Your Name</label>
+          <div class="control">
+            <input
+              required
+              class="input"
+              type="text"
+              placeholder="How should we address you?"
+              name="name"
+            />
+          </div>
+        </div>
+        
+        <div class="field">
+          <label class="label" for="email">Email</label>
+          <div class="control has-icons-left">
+            <input
+              class="input"
+              type="email"
+              required
+              placeholder="Where should we send our reply?"
+              name="email"
+            />
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+          </div>
+        </div>
+        
+        <div class="field">
+          <label class="label" for="subject">What's brewing?</label>
+          <div class="control">
+            <div class="select">
+              <select name="subject">
+                <option value="">Select a subject</option>
+                <option value="Product Enquiry">Coffee Enquiry</option>
+                <option value="Review">Leave a Review</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        
+        <div class="field">
+          <label class="label" for="message">Your Message</label>
+          <div class="control">
+            <textarea
+              required
+              class="textarea"
+              placeholder="Share your thoughts with us..."
+              name="message"
+            ></textarea>
+          </div>
+        </div>
+        
+        <div class="field">
+          <div class="control">
+            <button class="button is-primary" type="submit">Send Query</button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </section>
+  
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+  <script>
+    const { createClient } = supabase
+    supabase = createClient("https://biymjgwlkvhdvdnotmrj.supabase.co", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpeW1qZ3dsa3ZoZHZkbm90bXJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ1MzAyOTAsImV4cCI6MjA2MDEwNjI5MH0.OyIcTLYL8eGTp-hXzrfMhTpLrFDQu0yx64dy4gqueKw")
+    
+    const form = document.querySelector('#contact-form')
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault()
+      
+      const formInputs = form.querySelectorAll('input, select, textarea')
+      
+      let submision = {}
+      
+      formInputs.forEach(element => {
+        const { value, name } = element
+        if (value) {
+          submision[name] = value
+        }
+      })
+      
+      const { error } = await supabase.from('contact_entries').insert([submision], { returning: 'minimal'})
+      
+      if (error) {
+        alert('There was an error brewing your message. Please try again.')
+      } else {
+        window.location="submitted.html"
+      }
+      
+      formInputs.forEach(element => element.value = '')
+    })
+  </script>
+</body>
+</html>

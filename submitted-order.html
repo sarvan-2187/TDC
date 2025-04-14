@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Received - TDC</title>
+    <link rel="icon" href="Assets/Org.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        body{
+            font-family: 'Poppins', sans-serif;
+            color: #5D4037;
+            background-color: #f4f1ea;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background-image: url("Assets/coffee-beans.png");
+            background-repeat: repeat;
+            background-attachment: fixed;
+            background-size: 200px;
+            position: relative;
+        }
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(244, 241, 234, 0.85);
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 2px solid #8D6E63;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 10px;
+        }
+
+        .logo {
+            width: 100px;
+            height: auto;
+        }
+        
+        h1 {
+            color: #3E2723;
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .subtitle {
+            font-style: italic;
+            margin-top: 0;
+            color: #6D4C41;
+            font-weight: 300;
+        }
+        
+        .success-container {
+            background-color: #FFFFFF;
+            padding: 40px 30px;
+            border-radius: 8px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            margin-top: 30px;
+            text-align: center;
+        }
+        
+        .success-icon {
+            font-size: 80px;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+        
+        .success-title {
+            font-size: 28px;
+            color: #3E2723;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+        
+        .success-message {
+            font-size: 18px;
+            margin-bottom: 30px;
+            color: #5D4037;
+        }
+        
+        .order-details {
+            background-color: #f9f5f0;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: left;
+            border: 1px solid #d5bdaf;
+        }
+        
+        .order-details h3 {
+            color: #3E2723;
+            border-bottom: 1px dashed #d5bdaf;
+            padding-bottom: 10px;
+            margin-top: 0;
+        }
+        
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 5px 0;
+        }
+        
+        .detail-row:nth-child(even) {
+            background-color: rgba(213, 189, 175, 0.1);
+        }
+        
+        .detail-label {
+            font-weight: 500;
+            color: #6D4C41;
+        }
+        
+        .detail-value {
+            text-align: right;
+            color: #5D4037;
+        }
+        
+        .price-details {
+            margin-top: 20px;
+            border-top: 1px solid #d5bdaf;
+            padding-top: 15px;
+        }
+        
+        .total-row {
+            font-weight: 600;
+            color: #3E2723;
+            font-size: 1.1em;
+            margin-top: 10px;
+            border-top: 1px dashed #d5bdaf;
+            padding-top: 10px;
+        }
+        
+        .reference-box {
+            background-color: #3E2723;
+            color: #ffffff;
+            padding: 15px;
+            border-radius: 6px;
+            margin: 30px 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .reference-label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            opacity: 0.9;
+        }
+        
+        .reference-number {
+            font-size: 24px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+        
+        .btn {
+            background-color: #795548;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            font-size: 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            font-family: 'Poppins', sans-serif;
+            font-weight: 500;
+            text-decoration: none;
+            display: inline-block;
+            margin: 0 10px;
+        }
+        
+        .btn:hover {
+            background-color: #5D4037;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            color: #795548;
+            border: 2px solid #795548;
+        }
+        
+        .btn-outline:hover {
+            background-color: rgba(121, 85, 72, 0.1);
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px 0;
+            color: #8D6E63;
+            font-size: 14px;
+            font-weight: 300;
+        }
+        
+        .loading {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 0;
+        }
+        
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(121, 85, 72, 0.2);
+            border-top: 4px solid #795548;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-container {
+            background-color: #ffebee;
+            color: #b71c1c;
+            border: 1px solid #ef9a9a;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: center;
+        }
+        
+        .error-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>  
+        <div class="success-container" id="main-container">
+            <div class="logo-container">
+                <img src="Assets/Org.png" alt="Tanjore Degree Coffee Logo" class="logo">
+            </div>
+            <header>
+                <h1>Tanjore Degree Coffee</h1>
+            <div id="loading" class="loading">
+                <div class="spinner"></div>
+                <p>Fetching your order details...</p>
+            </div>
+            
+            <div id="order-success" style="display: none;">
+                <i class="fas fa-check-circle success-icon"></i>
+                <h2 class="success-title">Order Placed Successfully!</h2>
+                <p class="success-message">Thank you for your order from Tanjore Degree Coffee. We've confirmed your order and will process it shortly.</p>
+                
+                <div class="reference-box">
+                    <div class="reference-label">Your Order ID</div>
+                    <div class="reference-number" id="order-id">--</div>
+                </div>
+                
+                <div class="order-details" id="order-details">
+                    <h3>Order Details</h3>
+                    <div class="detail-row">
+                        <span class="detail-label">Name:</span>
+                        <span class="detail-value" id="customer-name">--</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Phone:</span>
+                        <span class="detail-value" id="customer-phone">--</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Product:</span>
+                        <span class="detail-value" id="product-name">--</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Delivery Address:</span>
+                        <span class="detail-value" id="delivery-address">--</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">Payment Method:</span>
+                        <span class="detail-value" id="payment-method">--</span>
+                    </div>
+                    
+                    <div class="price-details">
+                        <div class="detail-row">
+                            <span class="detail-label">Base Price:</span>
+                            <span class="detail-value" id="base-price">--</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">GST (18%):</span>
+                            <span class="detail-value" id="gst-amount">--</span>
+                        </div>
+                        <div class="detail-row total-row">
+                            <span class="detail-label">Total Amount:</span>
+                            <span class="detail-value" id="total-amount">--</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="actions">
+                    <a href="products.html" class="btn">Return to Dashboard</a><br><br>
+                    <a href="#" id="track-order-btn" class="btn btn-outline">Track Order</a>
+                </div>
+            </div>
+            
+            <div id="error-container" class="error-container" style="display: none;">
+                <i class="fas fa-exclamation-triangle error-icon"></i>
+                <h3>Unable to Fetch Order Details</h3>
+                <p id="error-message">There was a problem retrieving your order information. Please try again or contact customer support.</p>
+                <div class="actions" style="margin-top: 20px;">
+                    <a href="landing.html" class="btn">Return to Home</a>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>© 2025 Tanjore Degree Coffee. All rights reserved.</p>
+        </footer>
+    </div>
+    
+    <script src="https://unpkg.com/@supabase/supabase-js"></script>
+    <script>
+        // Get order ID from URL query parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const orderId = urlParams.get('orderId');
+        
+        // Initialize Supabase client
+        const { createClient } = supabase;
+        const supabaseClient = createClient(
+            "https://biymjgwlkvhdvdnotmrj.supabase.co", 
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpeW1qZ3dsa3ZoZHZkbm90bXJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ1MzAyOTAsImV4cCI6MjA2MDEwNjI5MH0.OyIcTLYL8eGTp-hXzrfMhTpLrFDQu0yx64dy4gqueKw"
+        );
+        
+        // Elements to update
+        const loading = document.getElementById('loading');
+        const orderSuccess = document.getElementById('order-success');
+        const errorContainer = document.getElementById('error-container');
+        const errorMessage = document.getElementById('error-message');
+        
+        async function fetchOrderDetails() {
+            try {
+                // Check if we have an order ID
+                if (!orderId) {
+                    // Try to get order ID from localStorage as fallback
+                    const localStorageOrderId = localStorage.getItem('latestOrderId');
+                    
+                    if (!localStorageOrderId) {
+                        throw new Error("No order ID found. Please check your order confirmation email.");
+                    }
+                    
+                    // Update URL with the order ID from localStorage
+                    const newUrl = new URL(window.location);
+                    newUrl.searchParams.set('orderId', localStorageOrderId);
+                    window.history.pushState({}, '', newUrl);
+                    
+                    fetchOrderById(localStorageOrderId);
+                } else {
+                    fetchOrderById(orderId);
+                }
+            } catch (error) {
+                showError(error.message);
+            }
+        }
+        
+        async function fetchOrderById(id) {
+            try {
+                // Fetch order data from Supabase
+                const { data, error } = await supabaseClient
+                    .from('orders')
+                    .select('*')
+                    .eq('id', id)
+                    .single();
+                
+                if (error) {
+                    throw error;
+                }
+                
+                if (!data) {
+                    throw new Error("Order not found. Please check your order ID.");
+                }
+                
+                // Display the order details
+                displayOrderDetails(data);
+                
+            } catch (error) {
+                showError("Failed to retrieve order details. " + error.message);
+            }
+        }
+        
+        function displayOrderDetails(order) {
+            // Update order ID
+            document.getElementById('order-id').textContent = `${order.id}`;
+            
+            // Update customer details
+            document.getElementById('customer-name').textContent = order.name || '--';
+            document.getElementById('customer-phone').textContent = order.phone || '--';
+            
+            // Update product details
+            document.getElementById('product-name').textContent = order.product || '--';
+            document.getElementById('delivery-address').textContent = order.address || '--';
+            document.getElementById('payment-method').textContent = order.paymentMethod || '--';
+            
+            // Update price details
+            document.getElementById('base-price').textContent = `Rs ${order.basePrice || 0}`;
+            document.getElementById('gst-amount').textContent = `Rs ${order.gst || 0}`;
+            document.getElementById('total-amount').textContent = `Rs ${order.totalPrice || 0}`;
+            
+            // Show the order success section
+            loading.style.display = 'none';
+            orderSuccess.style.display = 'block';
+            
+            // Add event listener for track order button
+            const trackOrderBtn = document.getElementById('track-order-btn');
+            trackOrderBtn.href = `tracking.html?orderId=${order.id}`;
+        }
+        
+        function showError(message) {
+            loading.style.display = 'none';
+            errorContainer.style.display = 'block';
+            errorMessage.textContent = message;
+        }
+        
+        // Fetch order details when the page loads
+        window.addEventListener('DOMContentLoaded', fetchOrderDetails);
+    </script>
+</body>
+</html>

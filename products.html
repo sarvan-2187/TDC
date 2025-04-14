@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - TDC</title>
+    <link rel="icon" href="Assets/Org.png">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            color: #5D4037;
+            background-color: #f4f1ea;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+            background: linear-gradient(135deg, rgb(0, 0, 0, 0.5), rgb(0, 0, 0, 0.5)) ,url(Assets/product-background.jpg); 
+            background-position: center;
+            background-size: cover; 
+            background-attachment: fixed; 
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top-right-radius: 12px;
+            border-top-left-radius: 12px;
+            padding: 20px 15px;
+            background-color: #ffffff;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        
+        .logo h1 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+        }
+        
+        .nav {
+            display: flex;
+            gap: 20px;
+        }
+        
+        .nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: 500;
+            cursor: pointer;
+        }
+        
+        .nav a:hover {
+            color: #5d4037;
+        }
+        
+        .hero-section {
+            padding: 60px 40px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgb(0, 0, 0, 0.7), rgb(0, 0, 0, 0.7)), url('Assets/coffee-bg.jpg') center/cover;
+            opacity: 1;
+            z-index: 0;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+        
+        .hero-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+        
+        .hero-description {
+            font-size: 18px;
+            margin-bottom: 30px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+        
+        .cta-button {
+            display: inline-block;
+            background-color: #fff;
+            color: #6b3636;
+            padding: 15px 40px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            animation: slideupDown 1s linear infinite;
+        }
+
+        @keyframes slideupDown{
+            0%{
+                translate: 0 -5px;
+            }
+
+            50%{
+                translate: 0 0px;
+            }
+
+            100%{
+                translate: 0 -5px;
+            }
+        }
+        
+        .page-title {
+            text-align: center;
+            margin: 20px 0 40px;
+            color: #6b3636;
+            font-size: 32px;
+            font-weight: 700;
+        }
+        
+        .products-container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-bottom-right-radius: 10px;
+            border-bottom-left-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+        
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+        
+        .product-card {
+            background-color: #fff;
+            border-radius: 8px;
+            overflow: hidden;
+            animation: fade 0.5s linear;
+            transition: all 0.3s linear;
+        }
+
+        .product-card:hover{
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .product-image {
+            height: 240px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            background-color: #f9f9f9;
+        }
+        
+        .product-image img {
+            max-height: 100%;
+            max-width: 100%;
+            object-fit: contain;
+        }
+        
+        .product-info {
+            padding: 20px;
+        }
+        
+        .product-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #6b3636;
+            margin-bottom: 10px;
+        }
+        
+        .product-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: #ff0000;
+            margin-bottom: 15px;
+        }
+        
+        .product-description {
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+        
+        footer {
+            margin-top: 60px;
+            padding: 20px 0;
+            border-top: 1px solid #ddd;
+            text-align: center;
+            color: #ffffff;
+        }
+
+        @keyframes slide {
+            0% {
+                translate: -100%;
+            }
+            100% {
+                translate: 0;
+            }
+        }
+
+        @keyframes fade {
+            0% {
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.5;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .products-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .container{
+                padding: none;
+            }
+            
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+                background-color: #ffffff;
+                padding: 20px;
+            }
+
+            .logo {
+                width: 100%;
+                justify-content: center;
+                margin-bottom: 10px;
+            }
+
+            .nav {
+                display: flex;
+                flex-direction: column;
+                width: 100%;
+                align-items: stretch;
+                gap: 8px;
+            }
+
+            .nav a {
+                display: block;
+                padding: 12px 16px;
+                background-color: #e6e6e6;
+                border-radius: 10px;
+                color: #333;
+                font-weight: 500;
+                text-align: center;
+                transition: background-color 0.2s ease;
+            }
+
+            .nav a:hover {
+                background-color: #d2b48c;
+                color: #fff;
+            }
+            
+            .hero-title {
+                font-size: 28px;
+            }
+            
+            .hero-description {
+                font-size: 16px;
+            }
+            
+            .products-container {
+                padding: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero-section {
+                padding: 40px 20px;
+            }
+            
+            .products-container {
+                padding: 15px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .logo h1 {
+                font-size: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <img src="Assets/Org.png" alt="Tanjore Degree Coffee" width="100">
+                <h1>Tanjore Degree Coffee</h1>
+            </div>
+            <nav class="nav">
+                <a href="products.html">Shop</a>
+                <a href="my-orders.html">My Orders</a>
+                <a href="tracking.html">Track Order</a>
+                <a href="contact-form.html">Contact Us</a>
+                <a id="logout-btn" style="cursor: pointer;">Logout</a>
+            </nav>
+        </header>
+        
+        <section class="hero-section">
+            <div class="hero-content">
+                <h2 class="hero-title">Premium South Indian Coffee Experience</h2>
+                <p class="hero-description">Explore our authentic collection of coffee products, from freshly roasted beans to traditional decoction. Bringing the rich taste of Tanjore to your home.</p>
+                <a href="#products" class="cta-button">Shop Now →</a>
+            </div>
+        </section>
+
+       
+        
+        <div class="products-container">
+             <h1 class="page-title" id="products">Our Products</h1>
+            <div class="products-grid">
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="Assets/rose-milk.jpg" alt="Rose Milk Powder">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Rose Milk Powder</h3>
+                        <p class="product-price">₹100</p>
+                        <p class="product-description">Premium rose-flavored milk powder for a fragrant and delicious drink. Perfect for warm afternoons.</p>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="Assets/coffee-sachets.jpg" alt="Instant Coffee Sachets">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Instant Coffee Sachets</h3>
+                        <p class="product-price">₹50</p>
+                        <p class="product-description">Pack of 10 instant coffee sachets. Rich flavor with authentic South Indian taste for coffee on the go.</p>
+                    </div>
+                </div>
+
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="Assets/Gallery-img-5.png" alt="Bold Coffee Decoction">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Bold Coffee Decoction</h3>
+                        <p class="product-price">₹250</p>
+                        <p class="product-description">Strong, concentrated coffee extract for authentic filter coffee experience. Bold flavor profile.</p>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="Assets/Gallery-img-1.png" alt="Coffee Decoction">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Coffee Decoction</h3>
+                        <p class="product-price">₹150</p>
+                        <p class="product-description">Classic coffee extract with balanced flavor. Perfect for making traditional filter coffee at home.</p>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="Assets/coffee-packet-beans.jpg" alt="Coffee Beans">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Coffee Beans</h3>
+                        <p class="product-price">₹300</p>
+                        <p class="product-description">Premium roasted coffee beans from the finest estates. Rich aroma and full-bodied flavor.</p>
+                    </div>
+                </div>
+                
+                <div class="product-card">
+                    <div class="product-image">
+                        <img src="Assets/tanjore-basic.jpg" alt="Basic Coffee Mug">
+                    </div>
+                    <div class="product-info">
+                        <h3 class="product-name">Basic Coffee Mug</h3>
+                        <p class="product-price">₹150</p>
+                        <p class="product-description">Simple yet elegant coffee mug perfect for enjoying your favorite brew at home or office.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2025 Tanjore Degree Coffee. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script src="https://unpkg.com/@supabase/supabase-js"></script>
+    <script>
+        const { createClient } = supabase;
+        const supabaseClient = createClient(
+            "https://biymjgwlkvhdvdnotmrj.supabase.co", 
+            "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpeW1qZ3dsa3ZoZHZkbm90bXJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ1MzAyOTAsImV4cCI6MjA2MDEwNjI5MH0.OyIcTLYL8eGTp-hXzrfMhTpLrFDQu0yx64dy4gqueKw"
+        );
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const user = JSON.parse(localStorage.getItem('user'));
+            if (!user) {
+                window.location.href = 'login.html';
+            }
+        });
+
+        document.getElementById('logout-btn').addEventListener('click', async function() {
+            try {
+                const { error } = await supabaseClient.auth.signOut();
+                
+                if (error) {
+                    throw error;
+                }
+                
+                localStorage.removeItem('user');
+                
+                window.location.href = 'landing.html';
+                
+            } catch (error) {
+                console.error('Logout error:', error);
+                alert(`Logout failed: ${error.message || 'Unknown error'}`);
+            }
+        });
+    </script>
+</body>
+</html>
