@@ -1,14 +1,11 @@
-/* Import fonts with display swap for better performance */
 @import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;600;800&display=swap');
 
-/* CSS Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-/* Base styles */
 :root {
     --primary-gradient: linear-gradient(to bottom right, #f0f8ff, #87cefa);
     --gold: #ffd700;
@@ -88,7 +85,7 @@ header h1 span {
 .item-1 {
     grid-column: 1 / span 3;
     grid-row: 4 / span 3;
-    background: linear-gradient(var(--dark-overlay), var(--dark-overlay)), url("Assets/original-edition.png") no-repeat center center/cover;
+    background: linear-gradient(var(--dark-overlay), var(--dark-overlay)), url("Assets/admin-part.png") no-repeat center center/cover;
 }
 
 .item-0:hover, .item-1:hover {
