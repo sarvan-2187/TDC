@@ -1,18 +1,32 @@
+/* Import fonts with display swap for better performance */
 @import url('https://fonts.googleapis.com/css2?family=Lexend+Deca:wght@300;400;600;800&display=swap');
 
+/* CSS Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Base styles */
+:root {
+    --primary-gradient: linear-gradient(to bottom right, #f0f8ff, #87cefa);
+    --gold: #ffd700;
+    --dark-overlay: rgba(0, 0, 0, 0.6);
+    --darker-overlay: rgba(0, 0, 0, 0.85);
+    --shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+    --light-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    --border-radius: 20px;
+}
+
 body {
     font-family: 'Lexend Deca', sans-serif;
-    background: linear-gradient(to bottom right, #f0f8ff, #87cefa);
+    background: var(--primary-gradient);
     min-height: 100vh;
     color: #111;
 }
 
+/* Header styles */
 header h1 {
     text-align: center;
     font-size: 3rem;
@@ -21,20 +35,21 @@ header h1 {
 }
 
 header h1 span {
-    background: linear-gradient(to right, rgb(101, 101, 101), rgb(0, 0, 0), rgb(48, 48, 48));
+    background: linear-gradient(to right, #656565, #000, #303030);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
 }
 
 .line {
-    background: linear-gradient(to right, rgb(0, 0, 0), rgb(180, 180, 180), rgb(0, 0, 0));
+    background: linear-gradient(to right, #000, #b4b4b4, #000);
     height: 5px;
     margin: 0 auto 2rem;
     width: 20%;
     border-radius: 20px;
 }
 
+/* Grid layout */
 .grid {
     display: grid;
     margin: 6rem 1rem;
@@ -44,9 +59,10 @@ header h1 span {
     gap: 2rem;
 }
 
+/* Grid items */
 .item {
     color: #fff;
-    border-radius: 20px;
+    border-radius: var(--border-radius);
     padding: 20px;
     font-size: 1.5rem;
     text-align: center;
@@ -60,24 +76,24 @@ header h1 span {
     justify-content: center;
     box-shadow: inset 0 0 20px rgba(255, 255, 255, 0.5);
     animation: appear 0.5s linear;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .item-0 {
     grid-column: 1 / span 3;
     grid-row: 1 / span 3;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("Assets/redesigned-version.png") no-repeat center center/cover;
+    background: linear-gradient(var(--dark-overlay), var(--dark-overlay)), url("Assets/redesigned-version.png") no-repeat center center/cover;
 }
 
 .item-1 {
     grid-column: 1 / span 3;
     grid-row: 4 / span 3;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url("Assets/original-edition.png") no-repeat center center/cover;
+    background: linear-gradient(var(--dark-overlay), var(--dark-overlay)), url("Assets/original-edition.png") no-repeat center center/cover;
 }
 
 .item-0:hover, .item-1:hover {
     transform: translateY(-5px);
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.7);
+    box-shadow: var(--shadow);
 }
 
 .item a {
@@ -89,9 +105,10 @@ header h1 span {
 }
 
 .item a:hover {
-    color: #ffd700;
+    color: var(--gold);
 }
 
+/* Description section */
 .description-container {
     display: flex;
     justify-content: center;
@@ -102,13 +119,13 @@ header h1 span {
 .description {
     display: flex;
     flex-direction: column;
-    border-radius: 20px;
-    background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)), url(Assets/internships.jpg) no-repeat center center/cover;
-    color: #ffffff;
+    border-radius: var(--border-radius);
+    background: linear-gradient(var(--darker-overlay), var(--darker-overlay)), url(Assets/internships.jpg) no-repeat center center/cover;
+    color: #fff;
     padding: 2rem;
     max-width: 90vw;
     animation: slide 1s ease-in-out;
-    transition: all 0.3s ease;
+    transition: transform 0.3s ease;
     line-height: 1.8;
     font-size: 1rem;
 }
@@ -118,7 +135,7 @@ header h1 span {
 }
 
 .description h2, .description h3 {
-    color: #ffd700;
+    color: var(--gold);
     margin-bottom: 1rem;
 }
 
@@ -137,7 +154,7 @@ header h1 span {
     max-width: 600px;
     border-radius: 12px;
     margin-top: 1rem;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+    box-shadow: var(--light-shadow);
     transition: transform 0.3s ease;
 }
 
@@ -145,6 +162,7 @@ header h1 span {
     transform: scale(1.02);
 }
 
+/* Footer styles */
 footer {
     margin-bottom: 2rem;
     padding: 1rem;
@@ -173,39 +191,25 @@ footer p {
     transform: scale(1.2);
 }
 
+/* Animations */
 @keyframes appear {
-    0% {
-        scale: 0;
-    }
-    50% {
-        scale: 0.5;
-    }
-    100% {
-        scale: 1;
-    }
+    0% { transform: scale(0); }
+    50% { transform: scale(0.5); }
+    100% { transform: scale(1); }
 }
 
 @keyframes fade {
-    0% {
-        opacity: 0;
-    }
-    50% {
-        opacity: 0.5;
-    }
-    100% {
-        opacity: 1;
-    }
+    0% { opacity: 0; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
 }
 
 @keyframes slide {
-    0% {
-        transform: translateX(-100%);
-    }
-    100% {
-        transform: translateX(0);
-    }
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(0); }
 }
 
+/* Media queries */
 @media (min-width: 768px) {
     .grid {
         padding: 1rem;
