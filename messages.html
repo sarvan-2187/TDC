@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Messages - TDC</title>
+  <link rel="icon" href="Assets/Org.png">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/poppins/4.0.1/poppins.min.css" rel="stylesheet">
+  <style>
+    :root {
+      --dark-brown: #3c2a21;
+      --medium-brown: #6b4f4f;
+      --light-brown: #d5bdaf;
+      --cream: #f4f1ea;
+      --text-dark: #2c1810;
+      --text-light: #f5f5f5;
+      --accent-gold: #cda349;
+      --border-radius: 6px;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+    
+    body {
+      background-color: var(--cream);
+      color: var(--text-dark);
+      line-height: 1.6;
+      background-image: url("Assets/contact-background.jpg");
+      background-repeat: no-repeat;
+      background-attachment: fixed;
+      background-size: cover;
+      position: relative;
+      min-height: 100vh;
+    }
+    
+    body::before {
+      content: "";
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(41, 41, 41, 0.85);
+      z-index: -1;
+    }
+    
+    .container {
+      width: 100%;
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    
+    .section {
+      padding: 40px 0;
+    }
+    
+    .coffee-card {
+      background-color: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(60, 42, 33, 0.15);
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+      border: 1px solid var(--light-brown);
+      margin-bottom: 30px;
+    }
+    
+    .coffee-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 8px;
+      background: linear-gradient(90deg, var(--dark-brown), var(--medium-brown), var(--light-brown));
+    }
+    
+    .title {
+      color: var(--dark-brown);
+      margin-bottom: 30px;
+      font-size: 2.3rem;
+      text-align: center;
+      font-weight: 600;
+      position: relative;
+      padding-bottom: 15px;
+      letter-spacing: -0.5px;
+    }
+    
+    .title::after {
+      content: "☕";
+      font-size: 1.5rem;
+      display: block;
+      text-align: center;
+      margin-top: 10px;
+      color: var(--accent-gold);
+    }
+    
+    .subtitle {
+      color: var(--medium-brown);
+      font-size: 1.4rem;
+      margin-bottom: 15px;
+      font-weight: 500;
+    }
+    
+    .message-list {
+      max-height: 600px;
+      overflow-y: auto;
+      margin-bottom: 20px;
+    }
+    
+    .message-item {
+      border: 1px solid var(--light-brown);
+      border-radius: var(--border-radius);
+      margin-bottom: 20px;
+      transition: all 0.3s ease;
+      overflow: hidden;
+    }
+    
+    .message-item:hover {
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    }
+    
+    .message-header {
+      background-color: #f9f5f0;
+      padding: 15px 20px;
+      border-bottom: 1px solid var(--light-brown);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      cursor: pointer;
+    }
+    
+    .message-header h3 {
+      color: var(--dark-brown);
+      font-size: 1.1rem;
+      font-weight: 500;
+      margin: 0;
+    }
+    
+    .message-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-top: 5px;
+      font-size: 0.85rem;
+      color: var(--medium-brown);
+    }
+    
+    .message-meta span {
+      display: flex;
+      align-items: center;
+    }
+    
+    .message-meta i {
+      margin-right: 5px;
+    }
+    
+    .status-badge {
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+    
+    .status-new {
+      background-color: #2196F3;
+      color: white;
+    }
+    
+    .status-in-progress {
+      background-color: #FFC107;
+      color: var(--text-dark);
+    }
+    
+    .status-resolved {
+      background-color: #4CAF50;
+      color: white;
+    }
+    
+    .message-body {
+      padding: 0;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.4s ease;
+    }
+    
+    .message-body.active {
+      padding: 20px;
+      max-height: 1000px;
+    }
+    
+    .message-content {
+      background-color: #f9f9f9;
+      border-radius: var(--border-radius);
+      padding: 15px;
+      margin-bottom: 20px;
+    }
+    
+    .message-content p {
+      margin: 0;
+    }
+    
+    .replies-container {
+      margin-top: 20px;
+    }
+    
+    .reply-item {
+      background-color: #f0f8ff;
+      border-left: 4px solid var(--accent-gold);
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 0 6px 6px 0;
+    }
+    
+    .reply-date {
+      font-size: 0.8rem;
+      color: var(--medium-brown);
+      margin-bottom: 8px;
+    }
+    
+    .no-replies {
+      font-style: italic;
+      color: #888;
+      text-align: center;
+      padding: 20px;
+    }
+    
+    .empty-state {
+      text-align: center;
+      padding: 40px 20px;
+    }
+    
+    .empty-state i {
+      font-size: 50px;
+      color: var(--light-brown);
+      margin-bottom: 20px;
+    }
+    
+    .empty-state p {
+      color: var(--medium-brown);
+      font-size: 1.1rem;
+    }
+    
+    .button {
+      display: inline-block;
+      background-color: var(--dark-brown);
+      color: var(--text-light);
+      border: none;
+      padding: 12px 24px;
+      border-radius: var(--border-radius);
+      font-size: 15px;
+      font-weight: 500;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(60, 42, 33, 0.1);
+      text-align: center;
+    }
+    
+    .button:hover {
+      background-color: var(--medium-brown);
+      transform: translateY(-2px);
+    }
+    
+    .button.secondary {
+      background-color: transparent;
+      border: 2px solid var(--dark-brown);
+      color: var(--dark-brown);
+    }
+    
+    .button.secondary:hover {
+      background-color: rgba(60, 42, 33, 0.1);
+    }
+    
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 15px;
+      margin-top: 30px;
+    }
+    
+    .email-form {
+      margin-bottom: 30px;
+    }
+    
+    .field {
+      margin-bottom: 20px;
+    }
+    
+    .label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--medium-brown);
+      font-size: 1rem;
+    }
+    
+    .control {
+      position: relative;
+    }
+    
+    .input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid var(--light-brown);
+      border-radius: var(--border-radius);
+      background-color: rgba(255, 255, 255, 0.9);
+      font-size: 15px;
+      transition: all 0.3s ease;
+      color: var(--text-dark);
+    }
+    
+    .input:focus {
+      outline: none;
+      border-color: var(--medium-brown);
+      box-shadow: 0 0 0 3px rgba(107, 79, 79, 0.2);
+      background-color: white;
+    }
+    
+    .has-icons-left {
+      position: relative;
+    }
+    
+    .icon.is-small.is-left {
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      left: 16px;
+      color: var(--medium-brown);
+    }
+    
+    .has-icons-left .input {
+      padding-left: 45px;
+    }
+    
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 12px 20px;
+      border-radius: var(--border-radius);
+      background-color: #4CAF50;
+      color: white;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      transform: translateX(120%);
+      transition: transform 0.3s ease-out;
+      z-index: 1000;
+    }
+    
+    .notification.show {
+      transform: translateX(0);
+    }
+    
+    .notification.error {
+      background-color: #f44336;
+    }
+    
+    @media (max-width: 768px) {
+      .section {
+        padding: 30px 0;
+      }
+      .title {
+        font-size: 1.8rem;
+      }
+      .coffee-card {
+        padding: 25px 15px;
+      }
+      .message-header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .status-badge {
+        margin-top: 10px;
+      }
+      .actions {
+        flex-direction: column;
+      }
+      .button {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="section container">
+    <div class="coffee-card">
+      <h1 class="title">My Messages</h1>
+      
+      <div class="email-form">
+        <div class="field">
+          <label class="label" for="email">Enter your email to view your messages</label>
+          <div class="control has-icons-left">
+            <input
+              class="input"
+              type="email"
+              id="email-input"
+              placeholder="The email you used when contacting us"
+              required
+            />
+            <span class="icon is-small is-left">
+              <i class="fas fa-envelope"></i>
+            </span>
+          </div>
+        </div>
+        <button id="find-messages-btn" class="button">Find My Messages</button>
+      </div>
+      
+      <div id="messages-container" class="message-list" style="display: none;">
+        <!-- Messages will be loaded here -->
+      </div>
+      
+      <div class="actions">
+        <a href="products.html" class="button secondary">Back to Home</a>
+        <a href="contact-form.html" class="button">Send New Message</a>
+      </div>
+    </div>
+  </section>
+  
+  <div id="notification" class="notification">Message retrieved successfully!</div>
+  
+  <script src="https://unpkg.com/@supabase/supabase-js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const { createClient } = supabase;
+      const supabaseClient = createClient(
+        "https://biymjgwlkvhdvdnotmrj.supabase.co", 
+        "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJpeW1qZ3dsa3ZoZHZkbm90bXJqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDQ1MzAyOTAsImV4cCI6MjA2MDEwNjI5MH0.OyIcTLYL8eGTp-hXzrfMhTpLrFDQu0yx64dy4gqueKw"
+      );
+      
+      const emailInput = document.getElementById('email-input');
+      const findMessagesBtn = document.getElementById('find-messages-btn');
+      const messagesContainer = document.getElementById('messages-container');
+      const notification = document.getElementById('notification');
+      
+      // Function to show notification
+      function showNotification(message, isError = false) {
+        notification.textContent = message;
+        notification.className = `notification ${isError ? 'error' : ''}`;
+        notification.classList.add('show');
+        
+        setTimeout(() => {
+          notification.classList.remove('show');
+        }, 3000);
+      }
+      
+      // Function to format date
+      function formatDate(dateString) {
+        if (!dateString) return 'N/A';
+        const date = new Date(dateString);
+        return date.toLocaleDateString() + ' ' + date.toLocaleTimeString();
+      }
+      
+      // Function to get status badge
+      function getStatusBadge(status) {
+        const statusMap = {
+          'new': { class: 'status-new', text: 'New' },
+          'in-progress': { class: 'status-in-progress', text: 'In Progress' },
+          'resolved': { class: 'status-resolved', text: 'Resolved' }
+        };
+        
+        const statusInfo = statusMap[status] || { class: 'status-new', text: 'New' };
+        return `<span class="status-badge ${statusInfo.class}">${statusInfo.text}</span>`;
+      }
+      
+      // Toggle message body
+      function toggleMessageBody(e) {
+        const header = e.currentTarget;
+        const body = header.nextElementSibling;
+        
+        if (body.classList.contains('active')) {
+          body.classList.remove('active');
+        } else {
+          // Close any other open message bodies
+          document.querySelectorAll('.message-body.active').forEach(el => {
+            if (el !== body) el.classList.remove('active');
+          });
+          body.classList.add('active');
+        }
+      }
+      
+      // Function to fetch messages
+      async function fetchMessages(email) {
+        try {
+          const { data, error } = await supabaseClient
+            .from('contact_entries')
+            .select('*')
+            .eq('email', email)
+            .order('created_at', { ascending: false });
+          
+          if (error) throw error;
+          
+          messagesContainer.style.display = 'block';
+          
+          if (data && data.length > 0) {
+            renderMessages(data);
+            showNotification('Messages retrieved successfully!');
+          } else {
+            messagesContainer.innerHTML = `
+              <div class="empty-state">
+                <i class="fas fa-coffee"></i>
+                <p>No messages found for this email address.</p>
+                <p style="margin-top: 15px;">
+                  <a href="contact-form.html" class="button">Send a Message</a>
+                </p>
+              </div>
+            `;
+          }
+          
+        } catch (error) {
+          console.error('Error fetching messages:', error);
+          showNotification('Error retrieving your messages. Please try again.', true);
+        }
+      }
+      
+      // Function to render messages
+      function renderMessages(messages) {
+        messagesContainer.innerHTML = '';
+        
+        messages.forEach(message => {
+          // Make sure replies is an array
+          let replies = [];
+          
+          // Parse replies if it's a string or ensure it's an array
+          if (message.replies) {
+            if (typeof message.replies === 'string') {
+              try {
+                replies = JSON.parse(message.replies);
+              } catch (e) {
+                console.error('Error parsing replies:', e);
+                replies = [];
+              }
+            } else if (Array.isArray(message.replies)) {
+              replies = message.replies;
+            }
+          }
+          
+          const hasReplies = replies.length > 0;
+          
+          const messageElement = document.createElement('div');
+          messageElement.className = 'message-item';
+          
+          // Create message header
+          const header = document.createElement('div');
+          header.className = 'message-header';
+          header.innerHTML = `
+            <div>
+              <h3>${message.subject || 'No Subject'}</h3>
+              <div class="message-meta">
+                <span><i class="far fa-calendar"></i> ${formatDate(message.created_at)}</span>
+              </div>
+            </div>
+            ${getStatusBadge(message.status || 'new')}
+          `;
+          header.addEventListener('click', toggleMessageBody);
+          
+          // Create message body
+          const body = document.createElement('div');
+          body.className = 'message-body';
+          
+          // Create message content
+          let bodyContent = `
+            <div class="message-content">
+              <p>${message.message}</p>
+            </div>
+          `;
+          
+          // Add replies if any
+          if (hasReplies) {
+            let repliesHtml = '<div class="replies-container">';
+            replies.forEach(reply => {
+              repliesHtml += `
+                <div class="reply-item">
+                  <div class="reply-date">
+                    <i class="fas fa-reply"></i> Admin replied on ${formatDate(reply.date)}
+                  </div>
+                  <p>${reply.message}</p>
+                </div>
+              `;
+            });
+            repliesHtml += '</div>';
+            bodyContent += repliesHtml;
+          } else {
+            bodyContent += `
+              <div class="no-replies">
+                <p>No replies yet. We'll get back to you soon.</p>
+              </div>
+            `;
+          }
+          
+          body.innerHTML = bodyContent;
+          
+          // Append header and body to message item
+          messageElement.appendChild(header);
+          messageElement.appendChild(body);
+          
+          // Append message item to container
+          messagesContainer.appendChild(messageElement);
+        });
+      }
+      
+      // Event listener for find messages button
+      findMessagesBtn.addEventListener('click', () => {
+        const email = emailInput.value.trim();
+        
+        if (!email) {
+          showNotification('Please enter your email address', true);
+          return;
+        }
+        
+        if (!email.includes('@') || !email.includes('.')) {
+          showNotification('Please enter a valid email address', true);
+          return;
+        }
+        
+        fetchMessages(email);
+      });
+      
+      // Allow pressing enter to submit
+      emailInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+          findMessagesBtn.click();
+        }
+      });
+    });
+  </script>
+</body>
+</html>
