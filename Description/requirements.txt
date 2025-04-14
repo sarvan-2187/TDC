@@ -1,0 +1,20 @@
+• Smooth Parallax Scrolling
+  - Implement parallax scrolling effects to create depth and immersion as users navigate through the website
+
+• Interactive Elements
+  - Introduce interactive elements such as hover effects, animated buttons, and image carousels to enhance user engagement
+
+• Responsive Design
+  - Ensure the website is fully responsive across devices, including desktops, tablets, and smartphones, to provide a seamless user experience
+
+• Optimized Performance
+  - Optimize website performance by minimizing loading times and ensuring smooth navigation for users
+
+• Seamless E-commerce Integration (Not Mandatory)
+  - If applicable, integrate an e-commerce platform to facilitate online ordering of coffee and rose milk products directly from the website
+
+• Visual Storytelling
+  - Use high-quality images and videos to visually showcase the client's products and convey the story behind their brand
+
+• SEO Optimization
+  - Implement basic search engine optimization (SEO) techniques to improve the website's visibility and rankings on search engine results pages
