@@ -5,6 +5,18 @@ Find my Internship Completion Certificate here 👇: https://drive.google.com/fi
 **Internship:** Shadow Fox Web Development Internship  <br>
 **🚀 Live Project:** [shadowfox-internship-client-project.vercel.app](https://shadowfox-internship-client-project.vercel.app)
 
+---
+
+## Tech Stack Used:
+- HTML  
+- CSS  
+- JavaScript  
+- HTML5 Geolocation API (for 30km delivery radius)  
+- Supabase Auth (for login & signup functionality)  
+- Supabase PostGres Database (for storing contact form queries & order details)  
+
+---
+
 I had the privilege of redesigning the digital home of **Tanjore Degree Coffee**, a beloved brand known for its authentic South Indian filter coffee and refreshing rose milk. Our mission was to blend **tradition with technology**—crafting a minimalist yet modern web experience that pays tribute to the brand’s rich legacy.
 
 This website redesign features:
@@ -20,15 +32,6 @@ This website redesign features:
 
 ---
 
-## 🔧 Tech Stack Used:
-- HTML  
-- CSS  
-- JavaScript  
-- HTML5 Geolocation API (for 30km delivery radius)  
-- Supabase Auth (for login & signup functionality)  
-- Supabase Database (for storing contact form queries & order details)  
+## Project Flow Diagram  
+![17497044573908586561653416597723](https://github.com/user-attachments/assets/a32f5026-f172-489e-8233-44e2b4d1fa9e)
 
----
-
-## 📈 Project Flow Diagram  
-[![Project Flow](https://github.com/user-attachments/assets/0ee564bf-6663-40d6-894e-ca1419ce46ef)](https://shadowfox-internship-client-project.vercel.app)
