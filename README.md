@@ -1,8 +1,8 @@
 Find my Internship Completion Certificate here 👇: https://drive.google.com/file/d/1hb56DauV4LPx84TORiKPmnimyBmSbxQt/view?usp=drivesdk
 
 #  Tanjore Degree Coffee — Website Redesign  
-** Duration:** April 2025 – May 2025  
-** Internship:** Shadow Fox Web Development Internship  
+**Duration:** April 2025 – May 2025  <br>
+**Internship:** Shadow Fox Web Development Internship  <br>
 **🚀 Live Project:** [shadowfox-internship-client-project.vercel.app](https://shadowfox-internship-client-project.vercel.app)
 
 I had the privilege of redesigning the digital home of **Tanjore Degree Coffee**, a beloved brand known for its authentic South Indian filter coffee and refreshing rose milk. Our mission was to blend **tradition with technology**—crafting a minimalist yet modern web experience that pays tribute to the brand’s rich legacy.
