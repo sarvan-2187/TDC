@@ -3,7 +3,7 @@ Find my Internship Completion Certificate here 👇: https://drive.google.com/fi
 #  Tanjore Degree Coffee — Website Redesign  
 **Duration:** April 2025 – May 2025  <br><br>
 **Internship:** Shadow Fox Web Development Internship  <br><br>
-**🚀 Live Project:** [shadowfox-internship-client-project.vercel.app](https://shadowfox-internship-client-project.vercel.app)<br>
+**🚀 Live Project:** https://shadowfox-client.vercel.app/
 
 ---
 
